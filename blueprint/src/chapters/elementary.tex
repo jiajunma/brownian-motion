@@ -71,6 +71,8 @@ A set $A \subseteq T \times \Omega$ is an elementary predictable set if and only
 \end{lemma}
 
 \begin{proof}
+
+\leanok
   Currently only proved the forward direction, because the backward direction is not easy to state.
 \end{proof}
 
@@ -148,13 +150,11 @@ We denote it by $V \bullet_{\mathbb{R}} X$.
 
 \begin{lemma}\label{lem:elemStochIntegral_linear}
   \uses{def:elemStochIntegralBilin, def:elemStochIntegralLinear, def:elemStochIntegral, lem:addCommGroup_simpleProcess, lem:module_simpleProcess}
-  \leanok
   \lean{ProbabilityTheory.SimpleProcess.integral_add_left, ProbabilityTheory.SimpleProcess.integral_smul_left, ProbabilityTheory.SimpleProcess.integral_add_right, ProbabilityTheory.SimpleProcess.integral_smul_right, ProbabilityTheory.SimpleProcess.integral_sub_left, ProbabilityTheory.SimpleProcess.integral_sub_right, ProbabilityTheory.SimpleProcess.integral_zero_left, ProbabilityTheory.SimpleProcess.integral_const_right}
 The elementary stochastic integrals $\bullet_B$, $\bullet_L$ and $\bullet_{\mathbb{R}}$ are linear in both arguments.
 \end{lemma}
 
 \begin{proof}
-  \leanok
 (In Lean, this is split into several lemmas about each argument and add/sub/smul.)
 
 Immediate from the definition.
