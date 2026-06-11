@@ -1242,6 +1242,139 @@ lemma ae_tendsto_along_countable [IsFiniteMeasure μ]
 
 end AETendsto
 
+/-! ### Pathwise regularization
+
+For a fixed path `h : ι → ℝ` admitting one-sided limits along a dense set `T`, the right-limit
+regularization `r` is right-continuous and inherits the left limits of `h`. -/
+
+section PathRegularization
+
+set_option linter.unusedSectionVars false
+
+variable {T : Set ι} {h r : ι → ℝ} {x : ι}
+
+lemma nhdsGT_inf_principal_neBot (hTd : Dense T) (x : ι) : (𝓝[>] x ⊓ 𝓟 T).NeBot := by
+  rw [Filter.inf_principal_neBot_iff]
+  intro U hU
+  obtain ⟨u, hxu, hsub⟩ := (nhdsGT_basis x).mem_iff.1 hU
+  obtain ⟨s', hs'T, hs'⟩ := hTd.exists_mem_open isOpen_Ioo
+    (Set.nonempty_Ioo.2 hxu)
+  exact ⟨s', hsub hs', hs'T⟩
+
+/-- The right-limit regularization is right-continuous at every point. -/
+lemma continuousWithinAt_rightLim (hTd : Dense T)
+    (hr : ∀ y, Tendsto h (𝓝[>] y ⊓ 𝓟 T) (𝓝 (r y))) (x : ι) :
+    ContinuousWithinAt r (Set.Ioi x) x := by
+  rw [ContinuousWithinAt, Metric.tendsto_nhds]
+  intro ε hε
+  have hev : ∀ᶠ s in 𝓝[>] x ⊓ 𝓟 T, |h s - r x| < ε / 2 := by
+    have hball := (hr x).eventually (Metric.ball_mem_nhds (r x) (by positivity : (0:ℝ) < ε / 2))
+    filter_upwards [hball] with s hs
+    rwa [Real.dist_eq] at hs
+  obtain ⟨u, hxu, hu⟩ := (nhdsGT_basis x).eventually_iff.1 (Filter.eventually_inf_principal.1 hev)
+  filter_upwards [Ioo_mem_nhdsGT hxu] with y hy
+  have hyev : ∀ᶠ s in 𝓝[>] y ⊓ 𝓟 T, |h s - r x| ≤ ε / 2 := by
+    refine Filter.eventually_inf_principal.2 ?_
+    filter_upwards [Ioo_mem_nhdsGT hy.2] with s hs hsT
+    exact (hu ⟨hy.1.trans hs.1, hs.2⟩ hsT).le
+  have hne := nhdsGT_inf_principal_neBot hTd y
+  have hle : |r y - r x| ≤ ε / 2 :=
+    le_of_tendsto (((hr y).sub_const (r x)).abs) hyev
+  calc dist (r y) (r x) = |r y - r x| := Real.dist_eq _ _
+    _ ≤ ε / 2 := hle
+    _ < ε := by linarith
+
+/-- The right-limit regularization inherits left limits of `h` along `T`. -/
+lemma tendsto_rightLim_nhdsLT (hTd : Dense T)
+    (hr : ∀ y, Tendsto h (𝓝[>] y ⊓ 𝓟 T) (𝓝 (r y))) {L : ℝ}
+    (hL : Tendsto h (𝓝[<] x ⊓ 𝓟 T) (𝓝 L)) :
+    Tendsto r (𝓝[<] x) (𝓝 L) := by
+  by_cases hex : ∃ u, u < x
+  swap
+  · have hempty : Set.Iio x = ∅ := Set.eq_empty_iff_forall_notMem.2
+      (fun u hu ↦ hex ⟨u, hu⟩)
+    rw [nhdsWithin, hempty, Filter.principal_empty, inf_bot_eq]
+    exact tendsto_bot
+  rw [Metric.tendsto_nhds]
+  intro ε hε
+  have hev : ∀ᶠ s in 𝓝[<] x ⊓ 𝓟 T, |h s - L| < ε / 2 := by
+    have hball := hL.eventually (Metric.ball_mem_nhds L (by positivity : (0:ℝ) < ε / 2))
+    filter_upwards [hball] with s hs
+    rwa [Real.dist_eq] at hs
+  obtain ⟨v, hvx, hv⟩ := (nhdsLT_basis_of_exists_lt hex).eventually_iff.1
+    (Filter.eventually_inf_principal.1 hev)
+  filter_upwards [Ioo_mem_nhdsLT hvx] with y hy
+  have hyev : ∀ᶠ s in 𝓝[>] y ⊓ 𝓟 T, |h s - L| ≤ ε / 2 := by
+    refine Filter.eventually_inf_principal.2 ?_
+    filter_upwards [Ioo_mem_nhdsGT hy.2] with s hs hsT
+    exact (hv ⟨hy.1.trans hs.1, hs.2⟩ hsT).le
+  have hne := nhdsGT_inf_principal_neBot hTd y
+  have hle : |r y - L| ≤ ε / 2 :=
+    le_of_tendsto (((hr y).sub_const L).abs) hyev
+  calc dist (r y) L = |r y - L| := Real.dist_eq _ _
+    _ ≤ ε / 2 := hle
+    _ < ε := by linarith
+
+/-- Along a strictly increasing sequence `u → x` from the left, the regularized values
+`r (u k)` tend to the left limit of `h` at `x` along `T' ⊇ T`. -/
+lemma tendsto_rightLim_comp_of_lt (hTd : Dense T) {T' : Set ι} (hTT' : T ⊆ T')
+    (hr : ∀ y, Tendsto h (𝓝[>] y ⊓ 𝓟 T) (𝓝 (r y))) {u : ℕ → ι} {L : ℝ}
+    (hux : ∀ k, u k < x) (hutend : Tendsto u atTop (𝓝 x))
+    (hL : Tendsto h (𝓝[<] x ⊓ 𝓟 T') (𝓝 L)) :
+    Tendsto (fun k ↦ r (u k)) atTop (𝓝 L) := by
+  rw [Metric.tendsto_nhds]
+  intro ε hε
+  have hev : ∀ᶠ s in 𝓝[<] x ⊓ 𝓟 T', |h s - L| < ε / 2 := by
+    have hball := hL.eventually (Metric.ball_mem_nhds L (by positivity : (0:ℝ) < ε / 2))
+    filter_upwards [hball] with s hs
+    rwa [Real.dist_eq] at hs
+  obtain ⟨v, hvx, hv⟩ := (nhdsLT_basis_of_exists_lt ⟨u 0, hux 0⟩).eventually_iff.1
+    (Filter.eventually_inf_principal.1 hev)
+  have hevk : ∀ᶠ k in atTop, u k ∈ Set.Ioi v :=
+    hutend (IsOpen.mem_nhds isOpen_Ioi hvx)
+  filter_upwards [hevk] with k hk
+  have hyev : ∀ᶠ s in 𝓝[>] (u k) ⊓ 𝓟 T, |h s - L| ≤ ε / 2 := by
+    refine Filter.eventually_inf_principal.2 ?_
+    filter_upwards [Ioo_mem_nhdsGT (hux k)] with s hs hsT
+    exact (hv ⟨hk.trans hs.1, hs.2⟩ (hTT' hsT)).le
+  have hne := nhdsGT_inf_principal_neBot hTd (u k)
+  have hle : |r (u k) - L| ≤ ε / 2 :=
+    le_of_tendsto (((hr (u k)).sub_const L).abs) hyev
+  calc dist (r (u k)) L = |r (u k) - L| := Real.dist_eq _ _
+    _ ≤ ε / 2 := hle
+    _ < ε := by linarith
+
+/-- Along a strictly decreasing sequence `u → x` from the right, the regularized values
+`r (u k)` tend to the right limit of `h` at `x` along `T' ⊇ T`. -/
+lemma tendsto_rightLim_comp_of_gt (hTd : Dense T) {T' : Set ι} (hTT' : T ⊆ T')
+    (hr : ∀ y, Tendsto h (𝓝[>] y ⊓ 𝓟 T) (𝓝 (r y))) {u : ℕ → ι} {L : ℝ}
+    (hux : ∀ k, x < u k) (hutend : Tendsto u atTop (𝓝 x))
+    (hL : Tendsto h (𝓝[>] x ⊓ 𝓟 T') (𝓝 L)) :
+    Tendsto (fun k ↦ r (u k)) atTop (𝓝 L) := by
+  rw [Metric.tendsto_nhds]
+  intro ε hε
+  have hev : ∀ᶠ s in 𝓝[>] x ⊓ 𝓟 T', |h s - L| < ε / 2 := by
+    have hball := hL.eventually (Metric.ball_mem_nhds L (by positivity : (0:ℝ) < ε / 2))
+    filter_upwards [hball] with s hs
+    rwa [Real.dist_eq] at hs
+  obtain ⟨v, hvx, hv⟩ := (nhdsGT_basis x).eventually_iff.1
+    (Filter.eventually_inf_principal.1 hev)
+  have hevk : ∀ᶠ k in atTop, u k ∈ Set.Iio v :=
+    hutend (IsOpen.mem_nhds isOpen_Iio hvx)
+  filter_upwards [hevk] with k hk
+  have hyev : ∀ᶠ s in 𝓝[>] (u k) ⊓ 𝓟 T, |h s - L| ≤ ε / 2 := by
+    refine Filter.eventually_inf_principal.2 ?_
+    filter_upwards [Ioo_mem_nhdsGT hk] with s hs hsT
+    exact (hv ⟨(hux k).trans hs.1, hs.2⟩ (hTT' hsT)).le
+  have hne := nhdsGT_inf_principal_neBot hTd (u k)
+  have hle : |r (u k) - L| ≤ ε / 2 :=
+    le_of_tendsto (((hr (u k)).sub_const L).abs) hyev
+  calc dist (r (u k)) L = |r (u k) - L| := Real.dist_eq _ _
+    _ ≤ ε / 2 := hle
+    _ < ε := by linarith
+
+end PathRegularization
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
