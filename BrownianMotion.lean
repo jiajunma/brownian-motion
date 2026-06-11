@@ -51,6 +51,7 @@ public import BrownianMotion.StochasticIntegral.ClassD
 public import BrownianMotion.StochasticIntegral.ConvexWeights
 public import BrownianMotion.StochasticIntegral.DoobLp
 public import BrownianMotion.StochasticIntegral.DoobMeyer
+public import BrownianMotion.StochasticIntegral.ItoFormula
 public import BrownianMotion.StochasticIntegral.Komlos
 public import BrownianMotion.StochasticIntegral.L2M
 public import BrownianMotion.StochasticIntegral.LocalMartingale
