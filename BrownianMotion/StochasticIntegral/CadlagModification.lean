@@ -496,6 +496,322 @@ lemma measureReal_altSet_le [IsFiniteMeasure μ]
 
 end UpcrossingBound
 
+/-! ### Maximal inequality along finite time sets -/
+
+section Maximal
+
+set_option linter.unusedSectionVars false
+
+variable {t : ι} {F : Finset ι} {lam : ℝ}
+
+/-- Discrete stopped telescoping identity: weighting the increments of `f` by the indicator of
+"not yet above `lam`" telescopes to the value at the first time `f` exceeds `lam`. -/
+lemma sum_indicator_mul_sub_eq_stopped (f : ℕ → Ω → ℝ) (lam : ℝ) (n : ℕ) (ω : Ω) :
+    ∑ k ∈ Finset.range n,
+        ({ω' | ∀ j ≤ k, f j ω' ≤ lam}.indicator 1 ω : ℝ) * (f (k + 1) ω - f k ω)
+      = f (hittingBtwn f (Set.Ioi lam) 0 n ω) ω - f 0 ω := by
+  classical
+  induction n with
+  | zero =>
+    have h0 : hittingBtwn f (Set.Ioi lam) 0 0 ω = 0 := Nat.le_zero.1 (hittingBtwn_le ω)
+    simp [h0]
+  | succ n ih =>
+    rw [Finset.sum_range_succ, ih]
+    by_cases hhit : ∃ j ∈ Set.Icc 0 n, f j ω ∈ Set.Ioi lam
+    · -- already hit by time `n`: the hitting time stabilizes and the last weight vanishes
+      have hstab : hittingBtwn f (Set.Ioi lam) 0 n ω = hittingBtwn f (Set.Ioi lam) 0 (n + 1) ω :=
+        hittingBtwn_eq_hittingBtwn_of_exists (Nat.le_succ n) hhit
+      obtain ⟨j, hj, hjs⟩ := hhit
+      have hnotmem : ω ∉ {ω' | ∀ j' ≤ n, f j' ω' ≤ lam} :=
+        fun hmem ↦ absurd (hmem j hj.2) (not_le.2 hjs)
+      rw [Set.indicator_of_notMem hnotmem, hstab]
+      ring
+    · -- no hit yet: all weights up to `n` equal one and the hitting time is the horizon
+      have hno : ∀ j, j ≤ n → f j ω ≤ lam :=
+        fun j hj ↦ not_lt.1 fun hlt ↦ hhit ⟨j, ⟨Nat.zero_le j, hj⟩, hlt⟩
+      have h1 : hittingBtwn f (Set.Ioi lam) 0 n ω = n := by
+        refine le_antisymm (hittingBtwn_le ω) (not_lt.1 fun hlt ↦ ?_)
+        obtain ⟨j, hj, hjs⟩ := (hittingBtwn_lt_iff n le_rfl).1 hlt
+        exact absurd hjs (not_lt.2 (hno j hj.2.le))
+      have h2 : hittingBtwn f (Set.Ioi lam) 0 (n + 1) ω = n + 1 := by
+        refine le_antisymm (hittingBtwn_le ω) (not_lt.1 fun hlt ↦ ?_)
+        obtain ⟨j, hj, hjs⟩ := (hittingBtwn_lt_iff (n + 1) le_rfl).1 hlt
+        exact absurd hjs (not_lt.2 (hno j (Nat.lt_succ_iff.1 hj.2)))
+      have hmem : ω ∈ {ω' | ∀ j' ≤ n, f j' ω' ≤ lam} := hno
+      rw [Set.indicator_of_mem hmem, h1, h2]
+      simp only [Pi.one_apply]
+      ring
+
+/-- Integrability of bounded-weight increment sums. -/
+lemma integrable_sum_weight_increments {g : ι → Ω → ℝ} (hgint : ∀ s, Integrable (g s) μ)
+    {n : ℕ} {idx : ℕ → ι} {W : ℕ → Ω → ℝ}
+    (hWmeas : ∀ k, k < n → AEStronglyMeasurable (W k) μ)
+    (hWb : ∀ k, k < n → ∀ ω, ‖W k ω‖ ≤ 1) :
+    Integrable (fun ω ↦ ∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω)) μ :=
+  integrable_finsetSum _ fun k hk ↦ Integrable.bdd_mul ((hgint _).sub (hgint _))
+    (hWmeas k (Finset.mem_range.1 hk)) (ae_of_all _ (hWb k (Finset.mem_range.1 hk)))
+
+/-- Two-sided expectation bound for adapted `{0,1}`-weighted increment sums of `X`, from the
+boundedness of elementary stochastic integrals at time `t`. The lower bound uses the
+complementary weights `1 - W`. -/
+lemma integral_sum_weight_increments_mem_Icc [IsFiniteMeasure μ]
+    (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    {n : ℕ} {idx : ℕ → ι} (hidx : Monotone idx) (hidxt : ∀ k, idx k ≤ t)
+    {W : ℕ → Ω → ℝ} (hW01 : ∀ k, k < n → ∀ ω, W k ω = 0 ∨ W k ω = 1)
+    (hWmeas : ∀ k, k < n → Measurable[𝓕 (idx k)] (W k)) :
+    ∫ ω, (∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ
+        ∈ Set.Icc (-(C + ∫ ω, |X (idx n) ω - X (idx 0) ω| ∂μ)) C := by
+  classical
+  have hb01 : ∀ (V : ℕ → Ω → ℝ), (∀ k, k < n → ∀ ω, V k ω = 0 ∨ V k ω = 1) →
+      ∀ k, k < n → ∀ ω, ‖V k ω‖ ≤ 1 := by
+    intro V hV k hk ω
+    rcases hV k hk ω with h | h <;> simp [h]
+  have hupper : ∀ (V : ℕ → Ω → ℝ), (∀ k, k < n → ∀ ω, V k ω = 0 ∨ V k ω = 1) →
+      (∀ k, k < n → Measurable[𝓕 (idx k)] (V k)) →
+      ∫ ω, (∑ k ∈ Finset.range n, V k ω * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ ≤ C := by
+    intro V hV01 hVmeas
+    obtain ⟨S, hS⟩ := exists_elementaryPredictableSet_integral_eq (𝓕 := 𝓕) (X := X) n
+      hidx hidxt (W := V) hV01 hVmeas
+    have : (fun ω ↦ ∑ k ∈ Finset.range n, V k ω * (X (idx (k + 1)) ω - X (idx k) ω))
+        = ((S.indicator (1 : ℝ) ● X) t) := (funext hS).symm
+    rw [this]
+    exact hC S
+  constructor
+  · -- lower bound via the complementary weights
+    have hW1 : ∀ k, k < n → ∀ ω, (1 - W k ω) = 0 ∨ (1 - W k ω) = 1 := by
+      intro k hk ω
+      rcases hW01 k hk ω with h | h <;> simp [h]
+    have hW1meas : ∀ k, k < n → Measurable[𝓕 (idx k)] (fun ω ↦ 1 - W k ω) :=
+      fun k hk ↦ (measurable_const.sub (hWmeas k hk))
+    have hco := hupper (fun k ω ↦ 1 - W k ω) hW1 hW1meas
+    have hsplit : ∀ ω, (∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω))
+        = (X (idx n) ω - X (idx 0) ω)
+          - ∑ k ∈ Finset.range n, (1 - W k ω) * (X (idx (k + 1)) ω - X (idx k) ω) := by
+      intro ω
+      have htel : ∑ k ∈ Finset.range n, (X (idx (k + 1)) ω - X (idx k) ω)
+          = X (idx n) ω - X (idx 0) ω := Finset.sum_range_sub (fun k ↦ X (idx k) ω) n
+      rw [← htel, ← Finset.sum_sub_distrib]
+      congr 1 with k
+      ring
+    have hint1 : Integrable
+        (fun ω ↦ ∑ k ∈ Finset.range n, (1 - W k ω) * (X (idx (k + 1)) ω - X (idx k) ω)) μ :=
+      integrable_sum_weight_increments hXint
+        (fun k hk ↦ ((hW1meas k hk).mono (𝓕.le _) le_rfl).aestronglyMeasurable)
+        (hb01 _ hW1)
+    have hintsub : Integrable (fun ω ↦ X (idx n) ω - X (idx 0) ω) μ :=
+      (hXint _).sub (hXint _)
+    have hI : ∫ ω, (∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ
+        = (∫ ω, (X (idx n) ω - X (idx 0) ω) ∂μ)
+          - ∫ ω, (∑ k ∈ Finset.range n, (1 - W k ω) * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ := by
+      rw [integral_congr_ae (μ := μ) (ae_of_all _ hsplit), integral_sub hintsub hint1]
+    have hT : -(∫ ω, |X (idx n) ω - X (idx 0) ω| ∂μ)
+        ≤ ∫ ω, (X (idx n) ω - X (idx 0) ω) ∂μ := by
+      rw [neg_le]
+      calc -∫ ω, (X (idx n) ω - X (idx 0) ω) ∂μ
+          ≤ |∫ ω, (X (idx n) ω - X (idx 0) ω) ∂μ| := neg_le_abs _
+        _ ≤ ∫ ω, |X (idx n) ω - X (idx 0) ω| ∂μ := abs_integral_le_integral_abs
+    rw [hI]
+    linarith [hco]
+  · exact hupper W hW01 hWmeas
+
+/-- One-sided maximal inequality along a finite skeleton for an adapted, integrable process `g`
+whose adapted `{0,1}`-weighted increment sums along `idx` have expectation at most `K`. -/
+lemma mul_measureReal_exists_lt_le [IsFiniteMeasure μ]
+    {g : ι → Ω → ℝ} (hg : StronglyAdapted 𝓕 g) (hgint : ∀ s, Integrable (g s) μ)
+    {n : ℕ} {idx : ℕ → ι} (hidx : Monotone idx) {K : ℝ}
+    (hK : ∀ W : ℕ → Ω → ℝ, (∀ k, k < n → ∀ ω, W k ω = 0 ∨ W k ω = 1) →
+      (∀ k, k < n → Measurable[𝓕 (idx k)] (W k)) →
+      ∫ ω, (∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω)) ∂μ ≤ K) :
+    lam * μ.real {ω | ∃ k ≤ n, lam < g (idx k) ω}
+      ≤ K + ∫ ω, |g (idx 0) ω| ∂μ + ∫ ω, |g (idx n) ω| ∂μ := by
+  classical
+  set f : ℕ → Ω → ℝ := fun k ω ↦ g (idx k) ω with hf
+  set W : ℕ → Ω → ℝ := fun k ↦ {ω' | ∀ j ≤ k, f j ω' ≤ lam}.indicator 1 with hW
+  have hW01 : ∀ k, k < n → ∀ ω, W k ω = 0 ∨ W k ω = 1 := by
+    intro k _ ω
+    by_cases h : ω ∈ {ω' | ∀ j ≤ k, f j ω' ≤ lam}
+    · exact Or.inr (by rw [hW]; simp [Set.indicator_of_mem h])
+    · exact Or.inl (by rw [hW]; simp [Set.indicator_of_notMem h])
+  have hWmeas : ∀ k, k < n → Measurable[𝓕 (idx k)] (W k) := by
+    intro k _
+    have hset : MeasurableSet[𝓕 (idx k)] {ω' | ∀ j ≤ k, f j ω' ≤ lam} := by
+      have : {ω' | ∀ j ≤ k, f j ω' ≤ lam} = ⋂ j ∈ Finset.Iic k, f j ⁻¹' Set.Iic lam := by
+        ext ω'
+        simp [Set.mem_iInter]
+      rw [this]
+      refine MeasurableSet.biInter (Finset.Iic k).countable_toSet fun j hj ↦ ?_
+      have hj' : j ≤ k := Finset.mem_Iic.1 hj
+      exact (𝓕.mono (hidx hj')) _ ((hg (idx j)).measurable measurableSet_Iic)
+    exact (measurable_const.indicator hset)
+  have hWb : ∀ k, k < n → ∀ ω, ‖W k ω‖ ≤ 1 := by
+    intro k hk ω
+    rcases hW01 k hk ω with h | h <;> simp [h]
+  -- the stopped value
+  set tau : Ω → ℕ := fun ω ↦ hittingBtwn f (Set.Ioi lam) 0 n ω with htau
+  set ftau : Ω → ℝ := fun ω ↦ f (tau ω) ω with hftau
+  have htel : ∀ ω, ftau ω = f 0 ω
+      + ∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω) := by
+    intro ω
+    have := sum_indicator_mul_sub_eq_stopped f lam n ω
+    rw [hftau, htau]
+    have hterm : ∀ k, W k ω * (g (idx (k + 1)) ω - g (idx k) ω)
+        = ({ω' | ∀ j ≤ k, f j ω' ≤ lam}.indicator 1 ω : ℝ) * (f (k + 1) ω - f k ω) := by
+      intro k
+      rfl
+    simp_rw [hterm]
+    rw [this]
+    ring
+  have hint_sum : Integrable
+      (fun ω ↦ ∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω)) μ :=
+    integrable_sum_weight_increments hgint
+      (fun k hk ↦ ((hWmeas k hk).mono (𝓕.le _) le_rfl).aestronglyMeasurable) hWb
+  have hint_ftau : Integrable ftau μ := by
+    have : ftau = fun ω ↦ f 0 ω
+        + ∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω) := funext htel
+    rw [this]
+    exact (hgint _).add hint_sum
+  -- the event
+  set H : Set Ω := {ω | ∃ k ≤ n, lam < g (idx k) ω} with hH
+  have hHmeas : MeasurableSet H := by
+    have : H = ⋃ k ∈ Finset.Iic n, (g (idx k)) ⁻¹' Set.Ioi lam := by
+      ext ω
+      simp [hH]
+    rw [this]
+    exact MeasurableSet.biUnion (Finset.Iic n).countable_toSet fun k _ ↦
+      (𝓕.le _) _ ((hg (idx k)).measurable measurableSet_Ioi)
+  -- on `H`, the stopped value exceeds `lam`
+  have hHval : ∀ ω ∈ H, lam < ftau ω := by
+    intro ω hω
+    obtain ⟨k, hk, hkval⟩ := hω
+    have hexists : ∃ j ∈ Set.Icc 0 n, f j ω ∈ Set.Ioi lam := ⟨k, ⟨Nat.zero_le k, hk⟩, hkval⟩
+    exact hittingBtwn_mem_set hexists
+  -- off `H`, the stopped value is the terminal value
+  have hHcval : ∀ ω ∉ H, ftau ω = f n ω := by
+    intro ω hω
+    have hno : ∀ j, j ≤ n → f j ω ≤ lam := by
+      intro j hj
+      by_contra hlt
+      exact hω ⟨j, hj, not_le.1 hlt⟩
+    have h1 : tau ω = n := by
+      refine le_antisymm (hittingBtwn_le ω) (not_lt.1 fun hlt ↦ ?_)
+      obtain ⟨j, hj, hjs⟩ := (hittingBtwn_lt_iff n le_rfl).1 hlt
+      exact absurd hjs (not_lt.2 (hno j hj.2.le))
+    change f (tau ω) ω = f n ω
+    rw [h1]
+  -- assemble
+  have hsplit : ∫ ω, ftau ω ∂μ = (∫ ω in H, ftau ω ∂μ) + ∫ ω in Hᶜ, ftau ω ∂μ :=
+    (integral_add_compl hHmeas hint_ftau).symm
+  have hlower : lam * μ.real H ≤ ∫ ω in H, ftau ω ∂μ := by
+    calc lam * μ.real H = ∫ _ in H, lam ∂μ := by rw [setIntegral_const, smul_eq_mul, mul_comm]
+      _ ≤ ∫ ω in H, ftau ω ∂μ := by
+          refine setIntegral_mono_on (integrable_const lam).integrableOn
+            hint_ftau.integrableOn hHmeas fun ω hω ↦ (hHval ω hω).le
+  have hcompl : -(∫ ω, |g (idx n) ω| ∂μ) ≤ ∫ ω in Hᶜ, ftau ω ∂μ := by
+    have heq : ∫ ω in Hᶜ, ftau ω ∂μ = ∫ ω in Hᶜ, f n ω ∂μ :=
+      setIntegral_congr_fun hHmeas.compl fun ω hω ↦ hHcval ω hω
+    rw [heq, neg_le]
+    calc -∫ ω in Hᶜ, f n ω ∂μ ≤ |∫ ω in Hᶜ, f n ω ∂μ| := neg_le_abs _
+      _ ≤ ∫ ω in Hᶜ, |f n ω| ∂μ := abs_integral_le_integral_abs
+      _ ≤ ∫ ω, |g (idx n) ω| ∂μ :=
+          setIntegral_le_integral (hgint _).abs (ae_of_all _ fun ω ↦ abs_nonneg _)
+  have htotal : ∫ ω, ftau ω ∂μ ≤ K + ∫ ω, |g (idx 0) ω| ∂μ := by
+    have : ∫ ω, ftau ω ∂μ = (∫ ω, f 0 ω ∂μ)
+        + ∫ ω, (∑ k ∈ Finset.range n, W k ω * (g (idx (k + 1)) ω - g (idx k) ω)) ∂μ := by
+      rw [← integral_add (hgint _) hint_sum]
+      exact integral_congr_ae (ae_of_all _ htel)
+    rw [this]
+    have h0 : ∫ ω, f 0 ω ∂μ ≤ ∫ ω, |g (idx 0) ω| ∂μ :=
+      integral_mono (hgint _) (hgint _).abs fun ω ↦ le_abs_self _
+    have hsum := hK W hW01 hWmeas
+    linarith
+  linarith [hsplit, hlower, hcompl, htotal]
+
+lemma finIdx_zero_eq_bot {F : Finset ι} {t : ι} (hbot : ⊥ ∈ F) : finIdx F t 0 = ⊥ := by
+  have hcard : 0 < F.card := Finset.card_pos.2 ⟨⊥, hbot⟩
+  obtain ⟨k, hk, hkeq⟩ := exists_finIdx_eq (t := t) hbot
+  rcases Nat.eq_zero_or_pos k with rfl | hkpos
+  · exact hkeq
+  · exact le_bot_iff.1 (hkeq ▸ (finIdx_lt_of_lt hkpos hk).le)
+
+/-- **Maximal inequality**: the probability that `|X|` exceeds `lam` somewhere on a finite set
+`F ⊆ Iic t` is at most `K / lam`, with `K` independent of `F`. -/
+lemma measureReal_exists_abs_lt_le [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hlam : 0 < lam) (hF : ∀ s ∈ F, s ≤ t) :
+    μ.real {ω | ∃ s ∈ F, lam < |X s ω|}
+      ≤ 2 * (C + ∫ ω, |X t ω - X ⊥ ω| ∂μ + ∫ ω, |X ⊥ ω| ∂μ + ∫ ω, |X t ω| ∂μ) / lam := by
+  classical
+  set G : Finset ι := insert ⊥ F with hG
+  have hGF : F ⊆ G := Finset.subset_insert _ _
+  have hGle : ∀ s ∈ G, s ≤ t := by
+    intro s hs
+    rcases Finset.mem_insert.1 hs with rfl | hs
+    · exact bot_le
+    · exact hF s hs
+  set n : ℕ := G.card with hn
+  set idx : ℕ → ι := finIdx G t with hidx
+  have hmono : Monotone idx := finIdx_monotone hGle
+  have hidx0 : idx 0 = ⊥ := finIdx_zero_eq_bot (Finset.mem_insert_self _ _)
+  have hidxn : idx n = t := finIdx_eq_of_card_le hn.ge
+  -- two-sided expectation bound for adapted 0/1 weights along `idx`
+  have hbdd : ∀ W : ℕ → Ω → ℝ, (∀ k, k < n → ∀ ω, W k ω = 0 ∨ W k ω = 1) →
+      (∀ k, k < n → Measurable[𝓕 (idx k)] (W k)) →
+      ∫ ω, (∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ
+        ∈ Set.Icc (-(C + ∫ ω, |X (idx n) ω - X (idx 0) ω| ∂μ)) C :=
+    fun W hW01 hWmeas ↦ integral_sum_weight_increments_mem_Icc (t := t) hXint hC hmono
+      (finIdx_le hGle) hW01 hWmeas
+  -- apply the one-sided maximal inequality to `X`
+  have hpos := mul_measureReal_exists_lt_le (lam := lam) hX hXint (n := n) hmono (K := C)
+    (fun W hW01 hWmeas ↦ (hbdd W hW01 hWmeas).2)
+  -- and to `-X`
+  have hnegX : StronglyAdapted 𝓕 (fun s ω ↦ -X s ω) := fun s ↦ (hX s).neg
+  have hnegint : ∀ s, Integrable ((fun s ω ↦ -X s ω) s) μ := fun s ↦ (hXint s).neg
+  have hneg := mul_measureReal_exists_lt_le (lam := lam) hnegX hnegint (n := n) hmono
+    (K := C + ∫ ω, |X (idx n) ω - X (idx 0) ω| ∂μ)
+    (fun W hW01 hWmeas ↦ by
+      have h1 := (hbdd W hW01 hWmeas).1
+      have h2 : ∫ ω, (∑ k ∈ Finset.range n, W k ω * (-X (idx (k + 1)) ω - -X (idx k) ω)) ∂μ
+          = -∫ ω, (∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω)) ∂μ := by
+        rw [← integral_neg]
+        congr 1 with ω
+        rw [← Finset.sum_neg_distrib]
+        congr 1 with k
+        ring
+      rw [h2]
+      linarith)
+  -- combine the two events
+  have hsub : {ω | ∃ s ∈ F, lam < |X s ω|}
+      ⊆ {ω | ∃ k ≤ n, lam < X (idx k) ω} ∪ {ω | ∃ k ≤ n, lam < -X (idx k) ω} := by
+    rintro ω ⟨s, hs, habs⟩
+    obtain ⟨k, hk, hkeq⟩ := exists_finIdx_eq (t := t) (hGF hs)
+    have hkeq' : idx k = s := hkeq
+    rcases lt_abs.1 habs with h | h
+    · exact Or.inl ⟨k, hk.le, hkeq'.symm ▸ h⟩
+    · exact Or.inr ⟨k, hk.le, hkeq'.symm ▸ h⟩
+  have habs0 : ∫ ω, |(fun s ω ↦ -X s ω) ⊥ ω| ∂μ = ∫ ω, |X ⊥ ω| ∂μ := by
+    congr 1 with ω
+    rw [abs_neg]
+  have habsn : ∫ ω, |(fun s ω ↦ -X s ω) t ω| ∂μ = ∫ ω, |X t ω| ∂μ := by
+    congr 1 with ω
+    rw [abs_neg]
+  rw [hidx0, hidxn] at hpos hneg
+  rw [habs0, habsn] at hneg
+  have hunion : μ.real {ω | ∃ s ∈ F, lam < |X s ω|}
+      ≤ μ.real {ω | ∃ k ≤ n, lam < X (idx k) ω} + μ.real {ω | ∃ k ≤ n, lam < -X (idx k) ω} :=
+    (measureReal_mono hsub).trans (measureReal_union_le _ _)
+  have hI : (0 : ℝ) ≤ ∫ ω, |X t ω - X ⊥ ω| ∂μ := integral_nonneg fun ω ↦ abs_nonneg _
+  rw [le_div_iff₀ hlam]
+  have hmul : lam * μ.real {ω | ∃ s ∈ F, lam < |X s ω|}
+      ≤ lam * (μ.real {ω | ∃ k ≤ n, lam < X (idx k) ω}
+        + μ.real {ω | ∃ k ≤ n, lam < -X (idx k) ω}) :=
+    mul_le_mul_of_nonneg_left hunion hlam.le
+  rw [mul_add] at hmul
+  nlinarith [hpos, hneg, hmul]
+
+end Maximal
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
