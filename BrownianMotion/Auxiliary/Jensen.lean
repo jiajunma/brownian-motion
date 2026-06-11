@@ -159,10 +159,9 @@ theorem Integrable.uniformIntegrable_condExp' {ι : Type*} {g : Ω → E}
     intro n
     have : C ^ ENNReal.toReal 1 * μ {x | ENNReal.ofNNReal C ≤ ‖μ[g|ℱ n] x‖₊} ≤
         eLpNorm μ[g|ℱ n] 1 μ ^ ENNReal.toReal 1 := by
-      rw [ENNReal.toReal_one, ENNReal.rpow_one]
-      convert mul_meas_ge_le_pow_eLpNorm μ one_ne_zero ENNReal.one_ne_top
-        (stronglyMeasurable_condExp.mono (hℱ n)).aestronglyMeasurable C
-      · rw [ENNReal.toReal_one, ENNReal.rpow_one, enorm_eq_nnnorm]
+      simpa only [ENNReal.toReal_one, ENNReal.rpow_one, NNReal.rpow_one, enorm_eq_nnnorm]
+        using mul_meas_ge_le_pow_eLpNorm' μ one_ne_zero ENNReal.one_ne_top
+          (stronglyMeasurable_condExp.mono (hℱ n)).aestronglyMeasurable C
     rw [ENNReal.toReal_one, ENNReal.rpow_one, mul_comm, ←
       ENNReal.le_div_iff_mul_le (Or.inl (ENNReal.coe_ne_zero.2 hCpos.ne'))
         (Or.inl ENNReal.coe_lt_top.ne)] at this
@@ -176,6 +175,7 @@ theorem Integrable.uniformIntegrable_condExp' {ι : Type*} {g : Ω → E}
     · convert one_mul _
       simp only [ofReal_eq_one]
       exact mul_inv_cancel₀ hδ.ne'
+    · infer_instance
     · infer_instance
   refine ⟨C, fun n => le_trans ?_ (h {x : Ω | C ≤ ‖(μ[g|ℱ n]) x‖₊} (hmeas n C) (this n))⟩
   have hmeasℱ : MeasurableSet[ℱ n] {x : Ω | C ≤ ‖(μ[g|ℱ n]) x‖₊} :=
