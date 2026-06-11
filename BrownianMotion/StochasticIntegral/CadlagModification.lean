@@ -326,6 +326,176 @@ lemma exists_elementaryPredictableSet_integral_eq {t : ι} (n : ℕ) {idx : ℕ 
 
 end Bridge
 
+/-! ### Upcrossing and alternation bounds along finite time sets -/
+
+section UpcrossingBound
+
+set_option linter.unusedSectionVars false
+
+variable {a b : ℝ} {t : ι} {F : Finset ι} {m : ℕ}
+
+/-- `upcrossingStrat` takes only the values `0` and `1`. -/
+lemma upcrossingStrat_eq_zero_or_one (a b : ℝ) (f : ℕ → Ω → ℝ) (N n : ℕ) (ω : Ω) :
+    upcrossingStrat a b f N n ω = 0 ∨ upcrossingStrat a b f N n ω = 1 := by
+  classical
+  rw [upcrossingStrat, ← Finset.indicator_biUnion_apply]
+  · rw [Set.indicator_apply]
+    split_ifs
+    · exact Or.inr rfl
+    · exact Or.inl rfl
+  intro i _ j _ hij
+  simp only [Set.Ico_disjoint_Ico]
+  obtain hij' | hij' := lt_or_gt_of_ne hij
+  · rw [min_eq_left (upperCrossingTime_mono (Nat.succ_le_succ hij'.le) :
+      upperCrossingTime a b f N _ ω ≤ upperCrossingTime a b f N _ ω),
+      max_eq_right (lowerCrossingTime_mono hij'.le :
+        lowerCrossingTime a b f N _ _ ≤ lowerCrossingTime _ _ _ _ _ _)]
+    exact le_trans upperCrossingTime_le_lowerCrossingTime
+      (lowerCrossingTime_mono (Nat.succ_le_of_lt hij'))
+  · rw [min_eq_right (upperCrossingTime_mono (Nat.succ_le_succ hij'.le) :
+      upperCrossingTime a b f N _ ω ≤ upperCrossingTime a b f N _ ω),
+      max_eq_left (lowerCrossingTime_mono hij'.le :
+        lowerCrossingTime a b f N _ _ ≤ lowerCrossingTime _ _ _ _ _ _)]
+    exact le_trans upperCrossingTime_le_lowerCrossingTime
+      (lowerCrossingTime_mono (Nat.succ_le_of_lt hij'))
+
+/-- Expectation bound on the number of upcrossings along a finite set of times `F ⊆ Iic t`,
+from the boundedness of elementary stochastic integrals at time `t`. -/
+lemma mul_integral_upcrossingsBefore_finIdx_le [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hab : a < b) (hF : ∀ s ∈ F, s ≤ t) :
+    (b - a) * ∫ ω, (upcrossingsBefore a b (fun k ↦ X (finIdx F t k)) F.card ω : ℝ) ∂μ
+      ≤ C + ∫ ω, max (a - X t ω) 0 ∂μ := by
+  classical
+  set f : ℕ → Ω → ℝ := fun k ω ↦ X (finIdx F t k) ω with hf
+  set n := F.card with hn
+  have hadapt : StronglyAdapted (pullbackFiltration 𝓕 (finIdx_monotone hF)) f :=
+    fun j ↦ hX (finIdx F t j)
+  obtain ⟨S, hS⟩ := exists_elementaryPredictableSet_integral_eq (𝓕 := 𝓕) (X := X) n
+    (finIdx_monotone hF) (finIdx_le hF) (W := upcrossingStrat a b f n)
+    (fun k _ ω ↦ upcrossingStrat_eq_zero_or_one a b f n k ω)
+    (fun k _ ↦ (hadapt.upcrossingStrat k).measurable)
+  have hpath : ∀ ω, (b - a) * (upcrossingsBefore a b f n ω : ℝ)
+      ≤ (S.indicator (1 : ℝ) ● X) t ω + max (a - X t ω) 0 := by
+    intro ω
+    have h1 := mul_upcrossingsBefore_le_sum_add_max (f := f) (N := n) (ω := ω) hab
+    have hfn : f n ω = X t ω := by
+      change X (finIdx F t n) ω = X t ω
+      rw [finIdx_eq_of_card_le hn.ge]
+    rw [hfn] at h1
+    have h2 : (S.indicator (1 : ℝ) ● X) t ω
+        = ∑ k ∈ Finset.range n, upcrossingStrat a b f n k ω * (f (k + 1) - f k) ω := hS ω
+    rwa [← h2] at h1
+  -- integrability of the elementary integral at `t`
+  have hWmeas : ∀ k, Measurable (upcrossingStrat a b f n k) := fun k ↦
+    ((hadapt.upcrossingStrat k).measurable).mono (𝓕.le _) le_rfl
+  have hintS : Integrable ((S.indicator (1 : ℝ) ● X) t) μ := by
+    have hSfun : ((S.indicator (1 : ℝ) ● X) t)
+        = fun ω ↦ ∑ k ∈ Finset.range n,
+          upcrossingStrat a b f n k ω * (X (finIdx F t (k + 1)) ω - X (finIdx F t k) ω) :=
+      funext hS
+    rw [hSfun]
+    refine integrable_finsetSum _ fun k _ ↦ Integrable.bdd_mul
+      (((hXint _).sub (hXint _)))
+      (hWmeas k).aestronglyMeasurable (c := 1) (ae_of_all _ fun ω ↦ ?_)
+    rw [Real.norm_eq_abs, abs_of_nonneg upcrossingStrat_nonneg]
+    exact upcrossingStrat_le_one
+  have hintmax : Integrable (fun ω ↦ max (a - X t ω) 0) μ :=
+    (((integrable_const a).sub (hXint t))).pos_part
+  have hintcount : Integrable (fun ω ↦ (upcrossingsBefore a b f n ω : ℝ)) μ :=
+    hadapt.integrable_upcrossingsBefore hab
+  calc (b - a) * ∫ ω, (upcrossingsBefore a b f n ω : ℝ) ∂μ
+      = ∫ ω, (b - a) * (upcrossingsBefore a b f n ω : ℝ) ∂μ := (integral_const_mul _ _).symm
+    _ ≤ ∫ ω, ((S.indicator (1 : ℝ) ● X) t ω + max (a - X t ω) 0) ∂μ :=
+        integral_mono (hintcount.const_mul _) (hintS.add hintmax) hpath
+    _ = μ[(S.indicator (1 : ℝ) ● X) t] + ∫ ω, max (a - X t ω) 0 ∂μ :=
+        integral_add hintS hintmax
+    _ ≤ C + ∫ ω, max (a - X t ω) 0 ∂μ := by gcongr; exact hC S
+
+variable (X) in
+/-- The event that `X` makes `m` alternations from strictly below `a` to strictly above `b` at
+increasing times inside the finite time set `F`. -/
+def altSet (F : Finset ι) (a b : ℝ) (m : ℕ) : Set Ω :=
+  {ω | ∃ c : ℕ → ι, (∀ i, i + 1 < 2 * m → c i < c (i + 1)) ∧ (∀ i < 2 * m, c i ∈ F)
+    ∧ (∀ i < m, X (c (2 * i)) ω < a) ∧ (∀ i < m, b < X (c (2 * i + 1)) ω)}
+
+lemma altSet_mono {F G : Finset ι} (h : F ⊆ G) : altSet X F a b m ⊆ altSet X G a b m :=
+  fun _ ⟨c, hc1, hc2, hca, hcb⟩ ↦ ⟨c, hc1, fun i hi ↦ h (hc2 i hi), hca, hcb⟩
+
+lemma finIdx_lt_finIdx_iff {k l : ℕ} (hk : k < F.card) (hl : l < F.card) :
+    finIdx F t k < finIdx F t l ↔ k < l := by
+  rw [finIdx, finIdx, dif_pos hk, dif_pos hl, Subtype.coe_lt_coe,
+    OrderIso.lt_iff_lt, Fin.mk_lt_mk]
+
+/-- On the event `altSet X F a b m`, the process `X` has at least `m` upcrossings along the
+enumeration of `F`. -/
+lemma altSet_subset_upcrossingsBefore (hab : a < b) :
+    altSet X F a b m
+      ⊆ {ω | m ≤ upcrossingsBefore a b (fun k ↦ X (finIdx F t k)) F.card ω} := by
+  classical
+  rintro ω ⟨c, hc1, hc2, hca, hcb⟩
+  have hex : ∀ i, i < 2 * m → ∃ k, k < F.card ∧ finIdx F t k = c i :=
+    fun i hi ↦ exists_finIdx_eq (hc2 i hi)
+  set c' : ℕ → ℕ := fun i ↦ if hi : i < 2 * m then (hex i hi).choose else 0 with hc'
+  have hc'spec : ∀ i (hi : i < 2 * m),
+      c' i < F.card ∧ finIdx F t (c' i) = c i := by
+    intro i hi
+    rw [hc']
+    simp only [dif_pos hi]
+    exact (hex i hi).choose_spec
+  refine le_upcrossingsBefore_of_alternating hab (c := c') ?_ ?_ ?_ ?_
+  · intro i hi
+    obtain ⟨hlt1, heq1⟩ := hc'spec i (by omega)
+    obtain ⟨hlt2, heq2⟩ := hc'spec (i + 1) hi
+    rw [← finIdx_lt_finIdx_iff (t := t) hlt1 hlt2, heq1, heq2]
+    exact hc1 i hi
+  · exact fun i hi ↦ (hc'spec i hi).1
+  · intro i hi
+    rw [(hc'spec (2 * i) (by omega)).2]
+    exact hca i hi
+  · intro i hi
+    rw [(hc'spec (2 * i + 1) (by omega)).2]
+    exact hcb i hi
+
+/-- Quantitative alternation bound: the probability of `m` alternations along any finite
+`F ⊆ Iic t` is at most `K / m` with `K` independent of `F` and `m`. -/
+lemma measureReal_altSet_le [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hab : a < b) (hm : 0 < m) (hF : ∀ s ∈ F, s ≤ t) :
+    μ.real (altSet X F a b m)
+      ≤ (C + ∫ ω, max (a - X t ω) 0 ∂μ) / (b - a) / m := by
+  classical
+  set f : ℕ → Ω → ℝ := fun k ω ↦ X (finIdx F t k) ω with hf
+  have hadapt : StronglyAdapted (pullbackFiltration 𝓕 (finIdx_monotone hF)) f :=
+    fun j ↦ hX (finIdx F t j)
+  have hsub : altSet X F a b m
+      ⊆ {ω | (m : ℝ) ≤ (upcrossingsBefore a b f F.card ω : ℝ)} := by
+    refine (altSet_subset_upcrossingsBefore (t := t) hab).trans ?_
+    intro ω hω
+    exact_mod_cast hω
+  have hmono : μ.real (altSet X F a b m)
+      ≤ μ.real {ω | (m : ℝ) ≤ (upcrossingsBefore a b f F.card ω : ℝ)} :=
+    measureReal_mono hsub
+  have hmarkov := mul_meas_ge_le_integral_of_nonneg (μ := μ)
+    (f := fun ω ↦ (upcrossingsBefore a b f F.card ω : ℝ))
+    (ae_of_all _ fun ω ↦ by positivity)
+    (hadapt.integrable_upcrossingsBefore hab) (m : ℝ)
+  have hbound := mul_integral_upcrossingsBefore_finIdx_le
+    (μ := μ) hX hXint hC hab hF
+  have hbpos : (0 : ℝ) < b - a := sub_pos.2 hab
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast hm
+  refine hmono.trans ?_
+  rw [div_div, le_div_iff₀ (by positivity)]
+  calc μ.real {ω | (m : ℝ) ≤ (upcrossingsBefore a b f F.card ω : ℝ)} * ((b - a) * m)
+      = (b - a) * ((m : ℝ) * μ.real {ω | (m : ℝ) ≤ (upcrossingsBefore a b f F.card ω : ℝ)}) := by
+        ring
+    _ ≤ (b - a) * ∫ ω, (upcrossingsBefore a b f F.card ω : ℝ) ∂μ := by gcongr
+    _ ≤ C + ∫ ω, max (a - X t ω) 0 ∂μ := hbound
+
+end UpcrossingBound
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
