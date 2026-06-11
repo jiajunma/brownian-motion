@@ -1,0 +1,12 @@
+Partial progress saved.
+
+I added and proved `Locally.isSquareIntegrable_submartingale_sq_norm` in [QuadraticVariation.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariation.lean:54). This closes the transport step: locally square-integrable process ⇒ localized squared norm is a submartingale, using `IsSquareIntegrable.submartingale_sq_norm` and `stoppedProcess_indicator_sq_norm`.
+
+The main theorem [IsLocalMartingale.isLocalSubmartingale_sq_norm](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariation.lean:64) still has the original documented `sorry`. The remaining blocker is honest: the current signature lacks `[SigmaFiniteFiltration P 𝓕]`, which is needed for conditional Jensen, and also lacks the usual assumptions needed to construct the square-integrability localization.
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` passes with the known `sorry` warning.
+- `lake build` passes with existing project-wide `sorry` warnings.
+- No `axiom`, `admit`, or `native_decide` introduced.
+
+Task report written to [.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariation.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariation.lean.md:1).

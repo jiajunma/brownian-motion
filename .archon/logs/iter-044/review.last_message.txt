@@ -1,0 +1,9 @@
+Review complete. I wrote the required files:
+
+- `.archon/proof-journal/sessions/session_44/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_44/summary.md`
+- `.archon/proof-journal/sessions/session_44/recommendations.md`
+- `.archon/iter/iter-044/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Verification rerun: both new Doob-Meyer helpers passed `lean_verify`, the target/downstream Lean files passed, and `lake build` completed successfully.

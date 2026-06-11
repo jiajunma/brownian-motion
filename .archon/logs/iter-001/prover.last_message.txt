@@ -1,0 +1,14 @@
+Implemented the càdlàg composition route.
+
+Changed:
+- [Cadlag.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/Cadlag.lean:56): added `IsCadlag.continuous_comp`.
+- [QuadraticVariation.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariation.lean:28): added stopped-process squared-norm helper lemmas.
+- [QuadraticVariation.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariation.lean:71): proved the `hX2_cadlag` obligation in `quadraticVariation`.
+
+I could not honestly close `IsLocalMartingale.isLocalSubmartingale_sq_norm`; the remaining `sorry` is now isolated at the missing local submartingale / square-integrability localization step, with comments documenting the intended route.
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` succeeds, with the remaining `sorry` warning.
+- `lake build` succeeds.
+
+Wrote the handoff report to [.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariation.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariation.lean.md).

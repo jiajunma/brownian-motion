@@ -1,0 +1,19 @@
+Review complete for iter-060.
+
+Wrote the required artifacts:
+
+- `.archon/proof-journal/sessions/session_60/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_60/summary.md`
+- `.archon/proof-journal/sessions/session_60/recommendations.md`
+- `.archon/PROJECT_STATUS.md`
+- `.archon/iter/iter-060/review.md`
+
+Also updated `.archon/TO_USER.md` because the plan sidecar recorded a strategy decision.
+
+Verification rerun passed:
+
+- `lean_verify` on the new Doob-Meyer wrapper: only standard axioms, no warnings
+- `lake env lean` for `DoobMeyer.lean`, `QuadraticVariation.lean`, `QuadraticVariationBrownian.lean`
+- `lake build`
+
+`milestones.jsonl` validates as JSON. No blueprint markers were manually changed.

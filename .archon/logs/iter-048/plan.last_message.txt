@@ -1,0 +1,13 @@
+Plan phase for iter 048 is complete.
+
+Set the next prover objective in [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) to the stopped-bound Doob-Meyer package in `BrownianMotion/StochasticIntegral/DoobMeyer.lean`: prove stopped-piece jump removal, transfer it back on `{t < τ}`, globalize over a localizing sequence, then compose with the stopped continuous finite-variation zero wrapper.
+
+Updated:
+- [.archon/iter/iter-048/plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-048/plan.md)
+- [.archon/iter/iter-048/objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-048/objectives.md)
+- [.archon/task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [.archon/task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [.archon/STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+
+Checks: `git diff --check` passed, and each new blueprint label appears exactly once. I did not run Lean because this phase made no Lean edits.

@@ -1,0 +1,19 @@
+Review complete for iter-046 / session_46.
+
+Wrote:
+- [.archon/proof-journal/sessions/session_46/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_46/summary.md)
+- [.archon/proof-journal/sessions/session_46/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_46/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_46/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_46/recommendations.md)
+- [.archon/iter/iter-046/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-046/review.md)
+- Updated [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+
+Also updated `.archon/TO_USER.md` with the non-blocking planner-decision notice required by the review prompt.
+
+Verification passed:
+- `lean_diagnostic_messages` on the new Doob-Meyer block
+- `lean_verify` for all four new declarations
+- `lake env lean` on the three stochastic-integral files
+- `lake build`
+- `milestones.jsonl` parses as valid JSONL with 4 entries
+
+No Lean files or blueprint markers were edited during review.

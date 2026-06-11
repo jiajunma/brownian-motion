@@ -1,0 +1,10 @@
+Review artifacts for iter-028 are written:
+
+- [.archon/proof-journal/sessions/session_28/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_28/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_28/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_28/summary.md)
+- [.archon/proof-journal/sessions/session_28/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_28/recommendations.md)
+- [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- [.archon/iter/iter-028/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-028/review.md)
+- [.archon/TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md)
+
+Key review finding: `attempts_raw.jsonl` incorrectly reported `no_prover_lane: true`, but raw logs and task result show the prover closed the new Doob-Meyer variation-bound helper. I recorded that mismatch and the marker-sync anomaly for the missing `\leanok` on the closed helper block. JSONL validation passed; I did not edit Lean files or blueprint `\leanok` markers.

@@ -1,0 +1,10 @@
+Plan phase complete for iter 051.
+
+Updated the next prover objective to the left-isolated predecessor branch in [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md). Added matching blueprint prose in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) for:
+
+- `MeasureTheory.IsStronglyPredictable.stronglyMeasurable_left_isolated_past`
+- `MeasureTheory.Martingale.eq_zero_of_predictable_left_isolated_of_previous`
+
+Also updated `task_pending.md`, `task_done.md`, `STRATEGY.md`, and wrote the iter sidecars [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-051/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-051/objectives.md). The iter-050 silent fallback was executed and recorded.
+
+Verification: Lean LSP diagnostics on the relevant Doob-Meyer region reported only the known reduction `sorry` warning. I did not rerun a full `lake build` in this plan phase.

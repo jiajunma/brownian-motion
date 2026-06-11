@@ -1,0 +1,42 @@
+{
+  "chapters_dir": "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters",
+  "content_tex": "/home/firefly/code/nus/math/brownian-motion/blueprint/src/content.tex",
+  "chapters_present": [
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/BrownianMotion_Auxiliary_StandardBorel.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/brownian.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/cadlag.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/characteristic_function.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/debut.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/elementary.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/filtration_martingale.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/gaussian.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/kolmogorov_chentsov.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/local_martingales.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/process.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/projective_family.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex"
+  ],
+  "chapters_included": [
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/BrownianMotion_Auxiliary_StandardBorel.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/brownian.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/cadlag.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/characteristic_function.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/debut.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/elementary.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/filtration_martingale.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/gaussian.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/kolmogorov_chentsov.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/local_martingales.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/process.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/projective_family.tex",
+    "/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex"
+  ],
+  "orphan_chapters": [],
+  "labels_defined_count": 627,
+  "broken_refs": [],
+  "malformed_refs": [],
+  "axiom_decls": [],
+  "covers_problems": []
+}

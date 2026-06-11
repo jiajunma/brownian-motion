@@ -1,0 +1,19 @@
+Plan phase for iter-041 is complete.
+
+Updated:
+- `.archon/PROGRESS.md`
+- `.archon/task_pending.md`
+- `.archon/task_done.md`
+- `.archon/STRATEGY.md`
+- `.archon/iter/iter-041/plan.md`
+- `.archon/iter/iter-041/objectives.md`
+- `blueprint/src/chapters/doob_meyer.tex`
+
+Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, targeting:
+
+- `MeasureTheory.Filtration.ae_eq_zero_of_past_setIntegral_eq_zero`
+- `MeasureTheory.Martingale.ae_eq_leftLim_of_left_approach_past_setIntegral_zero`
+
+I processed the iter-040 prover result, recorded the two closed past-sigma measurability lemmas, and kept the remaining Doob-Meyer sorries at lines `2085` and `2307` as the active state. I did not delete the task result file because the local role table gives plan read/collect access, not write access, to `task_results/`.
+
+Validation: `git diff --check` passes. No Lean build was run because I did not edit Lean files.

@@ -1,0 +1,5 @@
+Plan phase complete.
+
+Updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md), [task state](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md), [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md), and the iter sidecars. The next prover objective is a single upstream lane on `DoobMeyer.lean`: strengthen `doob_meyer_normalized` and its accessors with the usual assumptions, then close the two normalized sorries using the compiled helpers.
+
+I also updated [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) with the new local-martingale shift lemma and revised normalized theorem prose. No Lean build was run in this plan phase because I did not edit Lean files.

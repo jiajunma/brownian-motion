@@ -1,0 +1,12 @@
+Plan phase complete.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [iter-022 plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-022/plan.md)
+- [iter-022 objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-022/objectives.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+
+The Brownian fixed-time theorem is recorded as done. Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, targeting `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous`, with the bounded continuous finite-variation core helper as the first milestone.
+
+`task_results/` is empty. I did not run Lean, since this phase only changed Archon state and blueprint prose.

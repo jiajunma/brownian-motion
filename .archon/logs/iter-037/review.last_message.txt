@@ -1,0 +1,17 @@
+Review complete for `iter-037`.
+
+Wrote:
+- `.archon/proof-journal/sessions/session_37/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_37/summary.md`
+- `.archon/proof-journal/sessions/session_37/recommendations.md`
+- `.archon/iter/iter-037/review.md`
+- `.archon/PROJECT_STATUS.md`
+- `.archon/TO_USER.md`
+
+Verified:
+- `lake env lean` on `DoobMeyer.lean`, `QuadraticVariation.lean`, `QuadraticVariationBrownian.lean`
+- `lake build`
+- `lean_verify` for `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc`
+- JSONL validity for `milestones.jsonl`
+
+Outcome recorded: the prover closed `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc`; textual `sorry` count remains 23; no manual blueprint marker edits were made.

@@ -1,0 +1,5 @@
+Plan phase for iter 018 is complete.
+
+I updated the handoff to target `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_value_zero` in `DoobMeyer.lean`, since `past_condExp_zero` is now only a wrapper. I also split the matching blueprint content in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) and updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md), [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md), `task_pending.md`, `task_done.md`, and the iter 018 sidecars.
+
+The prover report was archived to `.archon/logs/iter-018/task_results-archive/` and `.archon/task_results/` is now clear. I did not run Lean in this plan phase; no Lean files were edited, and the consumed prover report already recorded `lake build` passing.

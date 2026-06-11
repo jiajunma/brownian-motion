@@ -1,0 +1,8 @@
+Plan phase for iter 038 is complete.
+
+I updated the Doob-Meyer blueprint with the new wrapper lemma `MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn`, refreshed `.archon/PROGRESS.md`, `.archon/task_pending.md`, `.archon/task_done.md`, and `.archon/STRATEGY.md`, and wrote the sidecars:
+
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-038/plan.md)
+- [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-038/objectives.md)
+
+Next prover objective is scoped to `BrownianMotion/StochasticIntegral/DoobMeyer.lean`: add the wrapper that uses original-path continuity plus `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc` to satisfy the existing stopped-piece continuity hypothesis. I did not edit Lean files or run `lake`, since this was a planning/blueprint update only.

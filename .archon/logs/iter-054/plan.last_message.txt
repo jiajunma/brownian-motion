@@ -1,0 +1,18 @@
+Plan phase complete for iter-054.
+
+Updated the next prover objective to target:
+
+`MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn_of_left_branch`
+
+This is backed by the new blueprint block in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:3528). It asks the prover to transfer explicit original horizon/variation bounds to stopped/indicator bounds using the existing transfer lemma, then call the closed branch connector.
+
+Also updated:
+
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md:8)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md:65)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md:12)
+- [iter-054 plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-054/plan.md:1)
+- [iter-054 objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-054/objectives.md:1)
+
+Processed and cleared the Doob-Meyer task result. I did not run Lean compilation because this pass only edited Archon state and blueprint prose, not `.lean` files.

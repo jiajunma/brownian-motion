@@ -1,0 +1,9 @@
+Reading additional input from stdin...
+2026-06-08T10:39:42.758143Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md:
+- Iter-041 marker sync was current (`iter: 41`) but added no `\leanok` for the newly closed generated-past zero-integral and jump-removal packaging blocks.
+- Iter-042 repeated the `no_prover_lane: true` preprocessing false positive despite `meta.json`, `prover.jsonl`, and the Doob-Meyer task result showing a completed prover lane.
+- Iter-042 marker sync was current (`iter: 42`, added 0, removed 0) but added no `\leanok` for the newly closed set-integral and dominated left-limit jump helper blocks.
+
+## Last Updated
+
+2026-06-08T14:21:57+08:00

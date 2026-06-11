@@ -1,0 +1,3 @@
+Iteration 001 plan completed. Dispatch is narrowed to `StandardBorel.lean`; blueprint, strategy, progress, and sidecars are updated.
+
+`lake build` passes with the 23 known sorries. No Lean files were edited. Blueprint PDF validation was blocked by a local XeLaTeX version mismatch.

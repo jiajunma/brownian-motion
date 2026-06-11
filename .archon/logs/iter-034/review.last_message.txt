@@ -1,0 +1,17 @@
+Review for iter-034 is complete.
+
+Wrote:
+- `.archon/proof-journal/sessions/session_34/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_34/summary.md`
+- `.archon/proof-journal/sessions/session_34/recommendations.md`
+- `.archon/iter/iter-034/review.md`
+- `.archon/PROJECT_STATUS.md`
+- `.archon/TO_USER.md`
+
+Verification rerun:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+All passed with only known warnings. JSON validation for `milestones.jsonl` passed, and I made no `.lean` or `\leanok` edits.

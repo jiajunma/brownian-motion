@@ -1,0 +1,11 @@
+Plan phase complete for iter 028.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md): next prover lane is `DoobMeyer.lean`, focused on the variation-bounded bounded-continuous zero-square helper.
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex): added the new blueprint lemma `..._of_variation_bound`.
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-028/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-028/objectives.md): recorded rationale and handoff.
+- Updated `task_pending.md`, `task_done.md`, and `STRATEGY.md`.
+
+Processed and archived the previous `DoobMeyer.lean` prover result. `task_results/` is now empty.
+
+I did not run Lean this turn because no `.lean` files were edited; the processed prover report already had `DoobMeyer.lean`, `QuadraticVariation.lean`, `QuadraticVariationBrownian.lean`, and `lake build` passing.

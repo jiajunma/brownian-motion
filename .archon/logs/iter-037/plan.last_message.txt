@@ -1,0 +1,8 @@
+Plan phase for iter 037 is complete.
+
+I processed the previous Doob-Meyer result as resolved, updated the state files, and set the next prover objective to add `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc` in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean). The supporting blueprint prose is in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:1565).
+
+I also wrote the iter sidecars:
+[plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-037/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-037/objectives.md).
+
+No subagents were enabled. I did not run Lean verification because no Lean files were edited; the prover objective includes the required `lake env lean` and `lake build` checks.

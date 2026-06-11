@@ -1,0 +1,18 @@
+Review complete for iter-036/session_36.
+
+Wrote:
+- [summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_36/summary.md)
+- [milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_36/milestones.jsonl)
+- [recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_36/recommendations.md)
+- [review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-036/review.md)
+- [PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+
+Key result: prover closed `MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_continuousOn`. Project textual `sorry` count remains 23.
+
+Verification rerun and passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Also validated `milestones.jsonl` with `jq` and ran `lean_verify` on the new theorem. No manual blueprint marker edits were made.

@@ -1,0 +1,8 @@
+Plan phase for iter-032 is complete.
+
+Updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) to assign `BrownianMotion/StochasticIntegral/DoobMeyer.lean` with the next target:
+`MeasureTheory.Martingale.eq_zero_on_event_of_bounded_continuous_finiteVariation_of_variation_bound_continuousOn`.
+
+Also added the optional follow-up exhaustion helper objective, updated [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex), refreshed `task_pending.md`, `task_done.md`, `STRATEGY.md`, and wrote the iter sidecars.
+
+Verification: `git diff --check` passed. I did not run Lean since this phase only edited planning/blueprint files. The processed task result was left in place because the local plan-agent boundary marks `task_results/` read-only.

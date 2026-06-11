@@ -1,0 +1,13 @@
+Planned iteration 045.
+
+Updated:
+- `.archon/PROGRESS.md` with the next `DoobMeyer.lean` prover objective.
+- `.archon/STRATEGY.md`, `task_pending.md`, `task_done.md`.
+- `.archon/iter/iter-045/plan.md` and `objectives.md`.
+- `blueprint/src/chapters/doob_meyer.tex` with two new informal lemma blocks.
+
+Next prover target is to add stopped/localized bounded jump-removal wrappers:
+- `MeasureTheory.Martingale.ae_eq_leftLim_stoppedProcess_indicator_of_left_approach_of_bound`
+- `MeasureTheory.Martingale.ae_eq_leftLim_localizingSequence_stoppedProcess_indicator_of_left_approach_of_bound`
+
+I did not edit Lean files or run a build this phase; this was planning/blueprint/state work only. I left the processed task result file in place because the Codex-local write boundary says not to edit `task_results/`.

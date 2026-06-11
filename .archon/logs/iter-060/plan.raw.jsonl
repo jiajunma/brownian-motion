@@ -1,0 +1,11 @@
+Reading additional input from stdin...
+2026-06-09T01:32:14.719880Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+This lemma does not construct
+the deterministic bounds, variation levels, partitions, mesh, or branch
+trichotomy; they remain explicit hypotheses.
+\end{proof}
+
+\begin{lemma}\label{lem:Martingale.eq_zero_of_bound_variation_bound_original_continuousOn_of_left_branch}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn_of_left_branch}
+  \lean{MeasureTheory.Martingale.eq_zero_of_bound_variation_bound_original_continuousOn_of_left_branch}
+Let \(N\) be a strongly predictable real-valued true martingale with

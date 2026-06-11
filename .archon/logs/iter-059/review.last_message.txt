@@ -1,0 +1,20 @@
+Review complete for iter-059.
+
+Wrote the required files:
+
+- [milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_59/milestones.jsonl)
+- [summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_59/summary.md)
+- [recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_59/recommendations.md)
+- [review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-059/review.md)
+- [PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- [TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md)
+
+Validation run:
+
+- `jq` validated `milestones.jsonl`
+- `lean_diagnostic_messages` found no Doob-Meyer errors and no warnings in the new block
+- `lean_run_code` `#check` resolved all three new declarations
+- `lake env lean` passed for `DoobMeyer`, `QuadraticVariation`, and `QuadraticVariationBrownian`
+- `lake build` passed with only known project `sorry` warnings
+
+Key review result: iter-059 closed the three closed-pre-stop stopped/indicator variation helpers, but the project-wide `sorry` count remains 23. No manual blueprint marker changes were needed.

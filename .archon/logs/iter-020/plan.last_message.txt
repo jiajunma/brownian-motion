@@ -1,0 +1,10 @@
+Plan phase complete.
+
+Updated:
+- `.archon/PROGRESS.md` now assigns `BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` to prove fixed-time `ProbabilityTheory.quadraticVariation_brownian`.
+- `.archon/iter/iter-020/plan.md` and `objectives.md` record the pivot and handoff.
+- `blueprint/src/chapters/stochastic_integral.tex` now states the exact fixed-time a.e target and corrected deterministic-time process route.
+- `blueprint/src/chapters/doob_meyer.tex` now records the square-increment helpers and bounded-continuous bridge from the last prover result.
+- `task_pending.md` reflects current Lean sorry locations: `DoobMeyer.lean:721,922` and `QuadraticVariation.lean:84`.
+
+No Lean files were edited and I did not run a build. `task_results/` is empty; the result file was already gone when cleanup ran, with the latest Doob-Meyer archive visible under `logs/iter-019/`.

@@ -1,0 +1,33 @@
+Reading additional input from stdin...
+2026-06-07T10:21:52.644702Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+lemma _root_.MeasureTheory.Martingale.integral_mul_increment_eq_zero
+    {κ Ω' : Type*} [LinearOrder κ]
+    {mΩ' : MeasurableSpace Ω'} {P' : Measure Ω'} {𝓕' : Filtration κ mΩ'}
+    [IsFiniteMeasure P'] {N : κ → Ω' → ℝ} (hN : Martingale N 𝓕' P')
+    {a b c d : κ} (hab : a ≤ b) (hbc : b ≤ c) (hcd : c ≤ d)
+    (hprod : Integrable (fun ω => (N b ω - N a ω) * (N d ω - N c ω)) P') :
+    ∫ ω, (N b ω - N a ω) * (N d ω - N c ω) ∂P' = 0 := by
+  let X : Ω' → ℝ := fun ω => N b ω - N a ω
+  let Y : Ω' → ℝ := fun ω => N d ω - N c ω
+  have hX_sm : StronglyMeasurable[𝓕' b] X := by
+    exact (hN.stronglyMeasurable b).sub
+      ((hN.stronglyMeasurable a).mono (𝓕'.mono hab))
+  have hY_int : Integrable Y P' :=
+    (hN.integrable d).sub (hN.integrable c)
+  have hY_cond : P'[Y | 𝓕' b] =ᵐ[P'] 0 := by
+    simpa [Y] using hN.condExp_increment_eq_zero hbc hcd
+  have hprod_cond :
+      P'[X * Y | 𝓕' b] =ᵐ[P'] 0 := by
+    calc
+      P'[X * Y | 𝓕' b] =ᵐ[P'] X * P'[Y | 𝓕' b] :=
+        MeasureTheory.condExp_mul_of_stronglyMeasurable_left hX_sm hprod hY_int
+      _ =ᵐ[P'] X * 0 := hY_cond.fun_comp₂ (fun x y => x * y) EventuallyEq.rfl
+      _ =ᵐ[P'] 0 := by simp
+  calc
+    ∫ ω, (N b ω - N a ω) * (N d ω - N c ω) ∂P'
+        = ∫ ω, X ω * Y ω ∂P' := by rfl
+    _ = ∫ ω, P'[X * Y | 𝓕' b] ω ∂P' := by
+        rw [MeasureTheory.integral_condExp (μ := P') (m := 𝓕' b) (m₀ := mΩ')
+          (f := X * Y) (𝓕'.le b)]
+    _ = ∫ _ω, (0 : ℝ) ∂P' := integral_congr_ae hprod_cond
+    _ = 0 := by simp

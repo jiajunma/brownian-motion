@@ -1,0 +1,16 @@
+Plan phase complete for iter 040.
+
+Updated:
+- `.archon/PROGRESS.md`
+- `.archon/task_pending.md`
+- `.archon/task_done.md`
+- `.archon/STRATEGY.md`
+- `.archon/iter/iter-040/plan.md`
+- `.archon/iter/iter-040/objectives.md`
+- `blueprint/src/chapters/doob_meyer.tex`
+
+Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, targeting:
+- `MeasureTheory.Martingale.stronglyMeasurable_leftLim_past_of_left_approach`
+- `MeasureTheory.Martingale.stronglyMeasurable_jump_leftLim_past_of_left_approach`
+
+I recorded the route correction: do not infer fixed earlier-time `𝓕' (u n)` measurability from strong predictability; use past-sigma measurability first. I did not run Lean verification because this phase only changed blueprint/state files, not `.lean` code.

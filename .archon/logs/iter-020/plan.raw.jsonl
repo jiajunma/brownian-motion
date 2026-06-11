@@ -1,0 +1,11 @@
+Reading additional input from stdin...
+2026-06-07T09:42:28.332650Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex:
+\end{proof}
+
+\begin{lemma}\label{lem:quadraticVariation_brownian}
+  \uses{def:brownianQuadraticVariation, lem:martingale_brownian_sq_sub_time, lem:predictablePart_eq_of_normalized_decomposition}
+  \lean{ProbabilityTheory.quadraticVariation_brownian}
+Let \(B\) be the canonical Brownian motion. Under the usual hypotheses used
+to define the Brownian quadratic variation, its quadratic variation is
+2026-06-07T09:44:03.983738Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md:
+- [ ] `BrownianMotion/StochasticIntegral/DoobMeyer.lean:631,819` — 2 sorries: `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_value_zero` is the remaining fixed-time value-zero bridge for a strongly predictable finite-variation true martingale, after the conditional-expectation endpoint and left-limit packaging were closed. `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_past_condExp_zero`, the public analytic theorem, public non-initial theorem, discrete predictable wrapper, main true-martingale theorem, stopped-local wrapper, and `IsLocalSubmartingale.predictablePart_eq_of_normalized_decomposition` have no internal `sorry` beyond their dependency on this deepest bridge. The original weak local Doob-Meyer decomposition remains as the long upstream theorem.

@@ -1,0 +1,16 @@
+Implemented the Doob-Meyer predictability interface in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:35).
+
+Changes:
+- Added `MeasureTheory.IsStronglyPredictable.const_fun`.
+- Added `MeasureTheory.IsStronglyPredictable.sub`.
+- Strengthened `IsLocalSubmartingale.doob_meyer` and `doob_meyer_normalized` so the finite-variation witness includes `IsStronglyPredictable`.
+- Added `IsLocalSubmartingale.isStronglyPredictable_predictablePart`.
+- Updated existing normalized accessor projections.
+
+Verification passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+The only remaining `DoobMeyer.lean` `sorry` is the original weak Doob-Meyer decomposition, now at the strengthened statement. I also wrote the handoff report to `.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md`.

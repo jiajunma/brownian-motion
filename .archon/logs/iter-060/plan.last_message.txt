@@ -1,0 +1,14 @@
+Plan phase complete for iter 060.
+
+Updated the next prover objective to target `BrownianMotion/StochasticIntegral/DoobMeyer.lean` with the new wrapper:
+
+`MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_pre_stop_bound_variation_bound_original_continuousOn_of_left_branch`
+
+Key files updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:3729)
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-060/plan.md:1)
+- [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-060/objectives.md:1)
+- `task_pending.md`, `task_done.md`, and `STRATEGY.md`
+
+I did not edit any Lean files or run a Lean build; this was a planning/blueprint/state update only.

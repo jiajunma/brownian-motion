@@ -1,0 +1,15 @@
+Implemented the two prover targets in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:2726):
+
+- `Filter.exists_seq_lt_tendsto_nhdsWithin_Iio_of_neBot`
+- `MeasureTheory.Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_continuousOn_of_neBot_left`
+
+The wrapper only constructs the left-approaching sequence from the explicit `NeBot` hypothesis, then delegates to the existing explicit-sequence theorem with all stopped-piece assumptions unchanged.
+
+Verification passed:
+
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining known `DoobMeyer.lean` sorries are at lines `2813` and `3066`. Wrote the handoff report to `.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md`.

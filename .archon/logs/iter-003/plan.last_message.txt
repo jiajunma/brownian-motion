@@ -1,0 +1,17 @@
+Plan phase complete for iter 003.
+
+I updated the objective to `BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`: try `quadraticVariation_brownian` only if normalized Doob-Meyer uniqueness is already available; otherwise add/prove `martingale_brownian_sq_sub_time`.
+
+Updated:
+- [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [.archon/STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [.archon/iter/iter-003/plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-003/plan.md)
+- [.archon/iter/iter-003/objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-003/objectives.md)
+- [stochastic_integral.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex)
+
+Key finding: the current Lean `doob_meyer` API lacks `A_0 = 0`, so predictable-part uniqueness is false as stated up to constant shifts. The final Brownian QV equality should not be forced through the choice-based `predictablePart`.
+
+Verification passed:
+- `git diff --check`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build` with the known sorry warnings.

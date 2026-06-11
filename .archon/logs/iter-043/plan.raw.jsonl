@@ -1,0 +1,11 @@
+Reading additional input from stdin...
+2026-06-08T06:29:27.802146Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+The same sequence of real numbers has limit \(0\) and the
+displayed jump integral, so uniqueness of limits gives the desired zero
+set integral.
+\end{proof}
+
+\begin{lemma}\label{lem:Martingale.ae_eq_leftLim_of_left_approach_past_measurable_increments}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:Martingale.eq_zero_of_predictable_finiteVariation_past_measurable_zero_increment, lem:LocallyBoundedVariationOn.exists_tendsto_left_univ}
+  \lean{MeasureTheory.Martingale.ae_eq_leftLim_of_left_approach_past_measurable_increments}
+Let \(M\) be a real-valued true martingale.  Fix a deterministic time \(t\),

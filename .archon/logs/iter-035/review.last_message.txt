@@ -1,0 +1,12 @@
+Review for iter-035 is complete.
+
+Wrote:
+- [.archon/proof-journal/sessions/session_35/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_35/summary.md)
+- [.archon/proof-journal/sessions/session_35/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_35/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_35/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_35/recommendations.md)
+- [.archon/iter/iter-035/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-035/review.md)
+- Updated [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md) Knowledge Base only.
+
+Key result: the prover closed the three planned stopped/indicator pathwise helpers plus the optional a.e. wrapper. Project `sorry` count under `BrownianMotion` remains 23. I reran the three Lean file checks, `lake build`, and `lean_verify` on all four new declarations; all passed with only expected warnings.
+
+Blueprint doctor was clean. No manual blueprint marker changes were made.

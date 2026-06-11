@@ -1,0 +1,17 @@
+Reading additional input from stdin...
+2026-06-07T12:06:12.000117Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+    have hnorm_le :
+        ‖F n ω‖ ≤
+          ∑ i ∈ Finset.range (m n),
+            ‖N (u n (i + 1)) ω - N (u n i) ω‖ ^ 2 := by
+      calc
+        ‖F n ω‖
+            ∑ i ∈ Finset.range (m n),
+                ‖(N (u n (i + 1)) ω - N (u n i) ω) ^ 2‖ := by
+              simpa [F] using
+                (norm_sum_le (Finset.range (m n))
+                  (fun i => (N (u n (i + 1)) ω - N (u n i) ω) ^ 2))
+        _ = ∑ i ∈ Finset.range (m n),
+              ‖N (u n (i + 1)) ω - N (u n i) ω‖ ^ 2 := by
+              refine Finset.sum_congr rfl fun i _hi => ?_
+              rw [pow_two, norm_mul, pow_two]

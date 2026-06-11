@@ -1,0 +1,5 @@
+Plan phase complete.
+
+Processed the Doob-Meyer prover result, updated `task_pending.md`, `task_done.md`, `STRATEGY.md`, and `PROGRESS.md`, expanded the Doob-Meyer blueprint uniqueness sketch, wrote the iter-012 sidecars, and cleared the processed task result.
+
+Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`: build the fixed-time a.e predictable finite-variation local-martingale uniqueness theorem, then the normalized predictable-part uniqueness theorem if feasible. Verification spot-check: `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` passed with the expected original `doob_meyer` sorry warning.

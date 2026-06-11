@@ -1,0 +1,11 @@
+Plan phase complete for iter 043.
+
+Processed the iter 042 Doob-Meyer result, marked the two set-integral helpers as done, and reassigned the prover to the bounded jump-removal package:
+
+- `Filter.Tendsto.eventually_const_le_of_nhdsWithin_Iio`
+- `MeasureTheory.norm_sub_le_two_mul_of_Icc_bound`
+- `MeasureTheory.Martingale.ae_eq_leftLim_of_left_approach_past_setIntegral_zero_of_bound`
+
+Updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md), [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md), [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md), [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md), and the Doob-Meyer blueprint chapter. Wrote the iter sidecars at [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-043/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-043/objectives.md).
+
+I did not run Lean compilation because this phase edited only Archon state and blueprint prose, not `.lean` files.

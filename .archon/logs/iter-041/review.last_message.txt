@@ -1,0 +1,14 @@
+Review complete for iter-041/session_41.
+
+Wrote the required files:
+
+- [.archon/proof-journal/sessions/session_41/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_41/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_41/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_41/summary.md)
+- [.archon/proof-journal/sessions/session_41/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_41/recommendations.md)
+- [.archon/iter/iter-041/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-041/review.md)
+- [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- [.archon/TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md)
+
+Verification passed: LSP diagnostics, both `lean_verify` checks, the three targeted `lake env lean ...` runs, `lake build`, `jq` validation for `milestones.jsonl`, and `git diff --check`.
+
+No Lean files or blueprint markers were edited during review.

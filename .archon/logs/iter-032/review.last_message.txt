@@ -1,0 +1,12 @@
+Review complete for iter-032.
+
+Wrote:
+- `.archon/proof-journal/sessions/session_32/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_32/summary.md`
+- `.archon/proof-journal/sessions/session_32/recommendations.md`
+- `.archon/iter/iter-032/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Validated `milestones.jsonl` with `jq`. Also checked LSP diagnostics and `lean_verify` for both new helpers; both only use the standard axioms `[propext, Classical.choice, Quot.sound]`.
+
+Key review result: prover did run despite `attempts_raw.jsonl` reporting `no_prover_lane: true`; the session closed the event-localized zero transfer helper and the countable event-exhaustion helper. The project-wide textual `sorry` count remains 23.

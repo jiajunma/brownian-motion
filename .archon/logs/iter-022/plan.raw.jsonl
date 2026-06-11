@@ -1,0 +1,31 @@
+Reading additional input from stdin...
+2026-06-07T10:12:57.904073Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+\begin{lemma}\label{lem:Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:BoundedVariationOn.sq_increment_sum_tendsto_zero_of_uniform_bound}
+  \lean{MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous}
+Let \(M\) be a strongly predictable càdlàg true martingale with \(M_0=0\),
+and suppose every path has locally bounded variation.  For every
+deterministic time \(t>0\), the bounded-continuous finite-variation bridge
+shows that \(M_t=0\) almost surely.
+\end{lemma}
+
+\begin{proof}
+Stop the process on a deterministic horizon and localize further so that the
+stopped martingale is bounded.  After the predictable-jump part has been
+removed, work with the continuous finite-variation process on that horizon.
+Choose deterministic partitions whose mesh tends to zero.  Martingale
+increments over disjoint partition intervals are orthogonal, so
+\[
+  \mathbb E[M_t^2]
+  =
+  \sum_{k<n}\mathbb E[(M_{s_{k+1}}-M_{s_k})^2].
+\]
+For each sample path, continuity makes the largest increment along these
+partitions tend to \(0\), while finite variation gives a finite variation
+bound.  Hence
+Lemma~\ref{lem:BoundedVariationOn.sq_increment_sum_tendsto_zero_of_uniform_bound}
+shows that the pathwise square-increment sums tend to \(0\).  Boundedness of
+the stopped martingale gives a dominating integrable random variable, so
+dominated convergence sends the expectations of the square-increment sums to
+\(0\).  Thus \(\mathbb E[M_t^2]=0\), and therefore \(M_t=0\) almost surely.
+\end{proof}

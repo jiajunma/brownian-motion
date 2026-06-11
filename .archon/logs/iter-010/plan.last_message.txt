@@ -1,0 +1,10 @@
+Prepared iteration 010 for the prover.
+
+Updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) to dispatch only `BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`, starting with the missing `Approximable brownianNaturalFiltration gaussianLimit` instance and then continuing toward `ProbabilityTheory.quadraticVariation_brownian`.
+
+Also updated the iteration sidecars:
+[plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-010/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-010/objectives.md).
+
+Blueprint was updated in [stochastic_integral.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex) with the Brownian approximability lemma and the usual-condition warning for the raw natural filtration.
+
+I merged the iter 009 prover result into `task_done.md` / `task_pending.md`, cleared the processed task result, and verified the current Lean failure is still exactly the missing `Approximable` instance at `QuadraticVariationBrownian.lean:254`.

@@ -1,0 +1,18 @@
+Implemented partial prover progress in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:758).
+
+Added/organized:
+- `Martingale.condExp_increment_eq_zero`
+- `Martingale.integral_mul_increment_eq_zero`
+- `MeasureTheory.ae_eq_zero_of_integral_sq_eq_zero`
+- terminal `Martingale.eq_zero_of_bounded_continuous_finiteVariation_core`
+- deeper gap helper `Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction`
+
+The public `eq_zero_of_predictable_finiteVariation_bounded_continuous` now delegates to the named reduction helper, but the analytic bridge is not closed. The remaining `sorry` is honestly isolated at [line 830](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:830); the old weak Doob-Meyer gap remains at [line 1083](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:1083).
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` passes with the two expected `sorry` warnings.
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` passes with its known warning.
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` passes.
+- `lake build` passes.
+
+Wrote the handoff to [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md).

@@ -1,0 +1,6 @@
+Reading additional input from stdin...
+2026-06-07T17:43:47.439984Z ERROR codex_rmcp_client::logging_client_handler: MCP server log message (level: Error, logger: Some("mcp.server.exception_handler"), data: "Internal Server Error")
+2026-06-07T17:43:47.447814Z ERROR codex_rmcp_client::logging_client_handler: MCP server log message (level: Error, logger: Some("mcp.server.exception_handler"), data: "Internal Server Error")
+2026-06-07T17:43:47.448507Z ERROR codex_rmcp_client::logging_client_handler: MCP server log message (level: Error, logger: Some("mcp.server.exception_handler"), data: "Internal Server Error")
+2026-06-07T17:44:48.293784Z ERROR codex_rmcp_client::logging_client_handler: MCP server log message (level: Error, logger: Some("mcp.server.exception_handler"), data: "Internal Server Error")
+2026-06-07T17:44:48.294747Z ERROR codex_rmcp_client::logging_client_handler: MCP server log message (level: Error, logger: Some("mcp.server.exception_handler"), data: "Internal Server Error")

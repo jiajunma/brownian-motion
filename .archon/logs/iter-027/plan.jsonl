@@ -1,0 +1,6 @@
+{"ts": "2026-06-07T12:16:01.470431Z", "event": "session_start", "model": "gpt-5.5", "runner": "codex", "role": "plan"}
+{"type":"thread.started","thread_id":"019ea202-efaf-71d3-96b4-ee450a7fb7a7"}
+{"type":"turn.started"}
+{"type":"error","message":"You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 9:26 PM."}
+{"type":"turn.failed","error":{"message":"You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 9:26 PM."}}
+{"ts": "2026-06-07T12:16:06.478310Z", "event": "rate_limit_wait", "runner": "codex", "attempt": 1, "wait_s": 3600.0, "message": "You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 9:26 PM."}

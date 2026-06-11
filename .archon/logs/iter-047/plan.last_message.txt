@@ -1,0 +1,7 @@
+Plan phase for iter 047 is complete.
+
+Updated [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) to assign one Doob-Meyer prover lane: add `MeasureTheory.Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn`.
+
+Also updated the new blueprint block in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:3162), refreshed [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md), [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md), and [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md). Wrote the iter sidecars at [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-047/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-047/objectives.md).
+
+I did not edit Lean files or clear `task_results/`, matching the plan-agent write boundary. Sanity checks passed for the new labels/objective references and no old refactor-directive flow was introduced.

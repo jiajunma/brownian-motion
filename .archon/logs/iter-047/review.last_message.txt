@@ -1,0 +1,13 @@
+Review for iter-047 is complete.
+
+Wrote the required files:
+
+- [milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_47/milestones.jsonl)
+- [summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_47/summary.md)
+- [recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_47/recommendations.md)
+- [PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- [review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-047/review.md)
+
+Also updated [TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md) with the required non-blocking planner-decision notice.
+
+Validation passed: `milestones.jsonl` parses as JSONL, `lean_verify` for the new wrapper reports only standard axioms, and `lake build` passes. The project-wide textual `sorry` count remains 23.

@@ -1,0 +1,5 @@
+brownian-direct-qv: ALIGN_WITH_MATHLIB — 4 decisions analyzed, 2 ALIGN_WITH_MATHLIB.
+
+Report: [.archon/task_results/mathlib-analogist-brownian-direct-qv.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/mathlib-analogist-brownian-direct-qv.md)
+
+Persistent analogy file was not written because this invocation restricted writes to the report path only.

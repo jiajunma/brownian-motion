@@ -1,0 +1,15 @@
+Plan phase complete for iter-029.
+
+Processed the `DoobMeyer.lean` prover result, archived it, and updated:
+
+- `.archon/PROGRESS.md`
+- `.archon/task_pending.md`
+- `.archon/task_done.md`
+- `.archon/STRATEGY.md`
+- `.archon/iter/iter-029/plan.md`
+- `.archon/iter/iter-029/objectives.md`
+- `blueprint/src/chapters/doob_meyer.tex`
+
+Next prover target is `MeasureTheory.Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation_of_variation_bound_eventual_modulus`, a path-dependent increment-modulus wrapper. This corrects the soundness issue that pathwise continuity gives a modulus depending on `ω`, not a deterministic modulus uniform over sample paths.
+
+Live `.archon/task_results/` is empty; the processed report is archived under `.archon/logs/iter-029/task_results-archive/`.

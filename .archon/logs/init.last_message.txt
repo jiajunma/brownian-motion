@@ -1,0 +1,16 @@
+Init complete. [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) is now at `prover` with 10 file-specific objectives covering 23 sorries.
+
+Verification:
+- `lake build`: passed, 3,311 jobs
+- Lean LSP: working
+- `archon doctor`: completed
+- `archon` PATH issue: fixed
+- No Lean or blueprint files edited
+
+Doctor warnings remain for optional API keys and absent Claude-local subagent/MCP configuration; Codex LSP works independently.
+
+Start with:
+
+```bash
+archon loop /home/firefly/code/nus/math/brownian-motion
+```

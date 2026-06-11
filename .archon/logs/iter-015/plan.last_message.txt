@@ -1,0 +1,10 @@
+Plan phase for iter 015 is complete.
+
+Updated:
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) with the new non-initial theorem sketch.
+- `.archon/PROGRESS.md`, `STRATEGY.md`, `task_pending.md`, `task_done.md`.
+- Iter sidecars: `.archon/iter/iter-015/plan.md` and `objectives.md`.
+
+Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, targeting `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_noninitial`, with instructions to close a real bounded-continuous or no-jumps helper if the full bridge is still too large.
+
+I did not run Lean because no Lean files were edited in this plan phase.

@@ -1,0 +1,14 @@
+Plan phase complete for iteration 014.
+
+Updated the next prover objective to stay in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean) and target only the true-martingale bridge `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation`. The stopped predictability/localization work is now recorded as done, and the prover is directed to first add the discrete wrapper around Mathlib’s `Martingale.eq_zero_of_predictable'`.
+
+Files updated:
+- [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [.archon/STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [.archon/task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [.archon/task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [.archon/iter/iter-014/plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-014/plan.md)
+- [.archon/iter/iter-014/objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-014/objectives.md)
+- [blueprint/src/chapters/doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+
+Processed task result was cleared. I ran `git diff --check` on the touched files; no whitespace issues. I did not run Lean because this phase only edited blueprint and Archon state files.

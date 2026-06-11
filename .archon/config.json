@@ -1,0 +1,86 @@
+{
+  "loop": {
+    "_model_help": "Model alias used by the plan / prover / review agents. Anthropic aliases: 'opus', 'sonnet', 'haiku' or any full model id. Non-Anthropic providers: 'kimi' or 'deepseek' \u2014 these require the matching credentials in .archon/.env (MOONSHOT_API_KEY, DEEPSEEK_API_KEY). No settings file is written to disk: env vars are injected into each subprocess only.",
+    "max_iterations": 1,
+    "parallel": false,
+    "max_parallel": 1,
+    "max_objectives": 1,
+    "model": "opus",
+    "verbose_logs": true,
+    "no_review": false,
+    "_debug_feedback_help": "Open a write-only feedback channel: each agent and subagent is told (in its prompt) that it may append short observations to .archon/.debug-feedback/debug_feedback.md when it notices a missing capability, a contradictory instruction, or anything else the developer should fix. Agents are told never to read the file. Off by default; flip to true while you are iterating on Archon itself.",
+    "debug_feedback": false,
+    "_axiom_sweep_help": "Run a deterministic #print axioms sweep between the prover and review phases (after \\leanok sync) to catch 'sorryAx laundering' \u2014 declarations that compile with no sorry WARNING yet depend on sorryAx through a clean-compiling delegate, which the warning-based sorry count misses. Findings are written to .archon/logs/iter-NNN/axiom-sweep.{md,json}; the phase never blocks. OFF by default: it temporarily appends #print axioms to each Lean file and recompiles, so it is noticeably slower than the other deterministic checks. Turn it on for soundness-critical projects.",
+    "axiom_sweep": false,
+    "harness": "codex"
+  },
+  "subagents": {
+    "_help": "Subagents are OFF by default to preserve the classic single-agent loop. To turn one on, add its name to `enabled` below (e.g. \"enabled\": [\"strategy-critic\", \"blueprint-reviewer\"]). To enable every shipped subagent, copy `_available` into `enabled`. Discovery: Archon loads `.md` descriptors from `.archon/subagents/` (project-local, overrides built-ins) and from the shipped built-ins. Each named entry (e.g. `subagents.refactor`) is an optional per-subagent settings object; the only field consulted today is `model` (a model alias overriding `loop.model` for that subagent). For backward compat, a bare string value is treated as the model alias.",
+    "_available": [
+      "blueprint-reviewer",
+      "blueprint-writer",
+      "lean-auditor",
+      "lean-vs-blueprint-checker",
+      "mathlib-analogist",
+      "progress-critic",
+      "reference-retriever",
+      "refactor",
+      "strategy-critic"
+    ],
+    "_recommended_plan_phase": [
+      "blueprint-reviewer",
+      "strategy-critic",
+      "progress-critic"
+    ],
+    "_recommended_review_phase": [
+      "lean-auditor",
+      "lean-vs-blueprint-checker"
+    ],
+    "enabled": [
+      "strategy-critic",
+      "mathlib-analogist"
+    ]
+  },
+  "state": {
+    "_help": "Per-iteration sidecar files capture each iter's plan + review narrative under .archon/iter/iter-NNN/{plan,review,objectives}.md so top-level files (STRATEGY.md, PROJECT_STATUS.md, task_*.md) stay bounded across iters. Set recent_iter_window to control how many recent sidecars get injected into the plan/review prompt.",
+    "recent_iter_window": 3
+  },
+  "multilane": {
+    "_help": "Set 'enabled' to true and add the lanes you want. Each lane uses Claude Code as its driver but routes requests to a different provider via ANTHROPIC_BASE_URL (set in .archon/.env).",
+    "enabled": false,
+    "base_ref": "main",
+    "grace_minutes": 10,
+    "lanes": [
+      {
+        "lane_id": "anthropic",
+        "provider": "anthropic",
+        "model": "opus",
+        "_env": "Anthropic auth is handled by Claude Code itself (interactive login during `archon init`). No env vars needed."
+      }
+    ],
+    "_examples": {
+      "_help": "Copy any of these into the 'lanes' list above to enable. Set the keys named in '_env' inside .archon/.env first.",
+      "kimi": {
+        "lane_id": "kimi",
+        "provider": "moonshot",
+        "_env": "Set MOONSHOT_API_KEY in .archon/.env (optional: MOONSHOT_BASE_URL, MOONSHOT_MODEL).",
+        "_extras": "No extras package needed \u2014 Moonshot speaks the Anthropic API natively."
+      },
+      "deepseek": {
+        "lane_id": "deepseek",
+        "provider": "deepseek",
+        "_env": "Set DEEPSEEK_API_KEY in .archon/.env (optional: DEEPSEEK_BASE_URL, DEEPSEEK_MODEL).",
+        "_extras": "No extras package needed \u2014 DeepSeek speaks the Anthropic API natively."
+      }
+    }
+  },
+  "harnesses": {
+    "codex": {
+      "runner": "codex",
+      "model": "gpt-5.5",
+      "effort": "xhigh",
+      "prompt_variant": "codex",
+      "mcp": "lean-lsp"
+    }
+  }
+}

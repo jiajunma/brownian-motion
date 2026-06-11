@@ -1,0 +1,20 @@
+Plan phase for iter-031 is complete.
+
+I updated the next prover objective to stay in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:1448), targeting the explicit-mesh continuous-path wrapper:
+
+`MeasureTheory.Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation_of_variation_bound_continuousOn`
+
+and, if that closes quickly, the matching a.e.-zero wrapper.
+
+Updated files:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:2121)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md:5)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md:32)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md:10)
+- [iter-031 plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-031/plan.md:1)
+- [iter-031 objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-031/objectives.md:1)
+
+Key decision recorded: deterministic entourage-mesh partitions are kept as an explicit hypothesis. I noted the two-point discrete ordered interval counterexample to prevent the next step from silently assuming a false general mesh-construction theorem.
+
+No Lean build was run in this plan phase; changes were blueprint/state/objective updates only.

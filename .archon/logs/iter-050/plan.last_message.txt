@@ -1,0 +1,12 @@
+Plan phase complete for iter 050.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+- [iter-050 plan](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-050/plan.md)
+- [iter-050 objectives](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-050/objectives.md)
+
+Next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, adding two bookkeeping wrappers around the nontrivial-left endpoint and stopped-process continuity transfer. I did not run a Lean build because no Lean files were edited in the plan phase.

@@ -1,0 +1,17 @@
+Review for iter-050 is complete.
+
+Wrote:
+- `.archon/proof-journal/sessions/session_50/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_50/summary.md`
+- `.archon/proof-journal/sessions/session_50/recommendations.md`
+- `.archon/iter/iter-050/review.md`
+- `.archon/PROJECT_STATUS.md` Knowledge Base update
+- `.archon/TO_USER.md` concise planner-decision notice
+
+Verified:
+- `lean_diagnostic_messages` on the new Doob-Meyer wrapper region
+- `lean_verify` for both new declarations
+- `lake env lean` for `DoobMeyer`, `QuadraticVariation`, and `QuadraticVariationBrownian`
+- `lake build`
+
+All checks passed. Project textual `sorry` count remains 23. The structured attempt preprocessor again reported `no_prover_lane: true`, but raw iter-050 logs and task results show the prover ran, so the review records that as a parser false positive.

@@ -1,0 +1,10 @@
+Implemented `ProbabilityTheory.martingale_brownian_sq_sub_time` in [QuadraticVariationBrownian.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean:39).
+
+The proof follows the blueprint route: for `s ≤ t`, it expands with `Δ = B_t - B_s`, uses independent increments for conditional expectations, pulls out the `F_s`-measurable `B_s` factor, and uses Gaussian variance to identify `E[Δ^2] = t - s`.
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` passed.
+- `lake build` passed. Existing `sorry` warnings are from other project files, not this target.
+- Wrote the Archon result log at `.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariationBrownian.lean.md`.
+
+I did not add `quadraticVariation_brownian`; it remains honestly blocked on normalized Doob-Meyer predictable-part uniqueness.

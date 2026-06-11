@@ -1,0 +1,3 @@
+Reading additional input from stdin...
+2026-06-08T18:26:58.011271Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md:
+- Fixed-time left-branch connector is not a trichotomy theorem. Do not use `MeasureTheory.Martingale.eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_original_continuousOn_of_left_branch` unless the branch disjunction and the stopped-bound, stopped-variation, original-continuity, partition, and mesh hypotheses are all already explicit.

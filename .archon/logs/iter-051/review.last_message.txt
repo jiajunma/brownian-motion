@@ -1,0 +1,11 @@
+Completed the iter-051 review artifacts.
+
+Wrote:
+- [summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_51/summary.md)
+- [milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_51/milestones.jsonl)
+- [recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_51/recommendations.md)
+- [review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-051/review.md)
+- Updated [PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- Updated [TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md)
+
+Verification passed: LSP diagnostics, both `lean_verify` checks, the three targeted `lake env lean` commands, `lake build`, `jq` validation for `milestones.jsonl`, and `git diff --check`. No Lean files or `\leanok` markers were modified by the review.

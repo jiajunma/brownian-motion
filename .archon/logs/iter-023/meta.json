@@ -1,0 +1,17 @@
+{
+  "iteration": 23,
+  "stage": "prover",
+  "mode": "serial",
+  "startedAt": "2026-06-07T10:35:23Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1006
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "running"
+  }
+}

@@ -1,0 +1,13 @@
+Review complete.
+
+Wrote the required iter-033 review artifacts:
+
+- `.archon/proof-journal/sessions/session_33/summary.md`
+- `.archon/proof-journal/sessions/session_33/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_33/recommendations.md`
+- `.archon/iter/iter-033/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Also updated `.archon/TO_USER.md` with the planner’s route decision notice.
+
+Validation done: `milestones.jsonl` parses as valid JSONL, all required files are nonempty, and I reran Lean checks for `DoobMeyer.lean`, `QuadraticVariation.lean`, and `QuadraticVariationBrownian.lean`. I did not touch `\leanok`; marker sync is current for iter-033 and still reports zero marker changes.

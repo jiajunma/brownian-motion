@@ -1,0 +1,14 @@
+Plan phase complete for iteration 026.
+
+Updated the Doob-Meyer route to target the next honest checkpoint: `MeasureTheory.Martingale.integral_sq_terminal_eq_zero_of_refining_partitions`, a variation-bounded refining-partition/DCT helper. I also aligned the blueprint with the finite-square proof that just landed and recorded the domination issue that requires an explicit total-variation bound before delocalization.
+
+Touched:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-026/plan.md)
+- [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-026/objectives.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+
+Processed prover report was archived under `.archon/logs/iter-026/task_results-archive/` and `.archon/task_results/` is now empty. I did not run Lean verification because I only edited Archon state and blueprint prose, not Lean files.

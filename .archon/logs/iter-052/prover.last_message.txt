@@ -1,0 +1,11 @@
+Added `MeasureTheory.Martingale.eq_zero_of_predictable_bottom_immediate` in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:826). It honestly specializes the existing left-isolated predecessor lemma with `s = ⊥`, keeps `hbot_prev` explicit, and converts `hN_zero` via `Eventually.of_forall`.
+
+Wrote the handoff at [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md:1).
+
+Verification passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining expected `DoobMeyer.lean` sorries: `eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction` at line 2937 and `IsLocalSubmartingale.doob_meyer` at line 3190.

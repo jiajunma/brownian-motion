@@ -1,0 +1,27 @@
+{
+  "iteration": 22,
+  "stage": "prover",
+  "mode": "serial",
+  "startedAt": "2026-06-07T10:06:30Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 581
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 756
+  },
+  "sorry_count": 23,
+  "finalize": {
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-06-07T10:36:06Z",
+  "wallTimeSecs": 1775
+}

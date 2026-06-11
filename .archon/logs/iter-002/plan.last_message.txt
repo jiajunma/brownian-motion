@@ -1,0 +1,23 @@
+Plan phase is complete for iter-002.
+
+I set the prover objective to one file: `BrownianMotion/StochasticIntegral/QuadraticVariation.lean`, targeting the remaining `IsLocalMartingale.isLocalSubmartingale_sq_norm` sorry as the upstream step toward blueprint Lemma 13.40.
+
+Updated:
+- `.archon/PROGRESS.md`
+- `.archon/STRATEGY.md`
+- `.archon/task_pending.md`
+- `.archon/task_done.md`
+- `.archon/iter/iter-002/plan.md`
+- `.archon/iter/iter-002/objectives.md`
+- `blueprint/src/chapters/stochastic_integral.tex`
+- `blueprint/src/chapters/doob_meyer.tex`
+
+Blueprint work:
+- Added explicit coverage for `QuadraticVariation.lean`.
+- Added the helper block `lem:stoppedProcess_indicator_sq_norm`.
+- Filled the informal proof route for the local square-norm submartingale lemma.
+- Fixed the stale Doob-Meyer `\uses` reference to `lem:isStronglyPredictable.predictablePart_eq`.
+
+Verification:
+- `lake build` passed with the known 22 sorry warnings.
+- `git diff --check` passed.

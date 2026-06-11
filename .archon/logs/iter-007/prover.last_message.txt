@@ -1,0 +1,10 @@
+Implemented the Doob-Meyer prover step in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:111).
+
+Added `ProbabilityTheory.IsLocalMartingale.add_initial_of_hasLocallyIntegrableSup`, proving the common-localization route for shifting a local martingale by `A ⊥` under:
+`[SecondCountableTopology ι] [BorelSpace ι] [PseudoMetrizableSpace ι] [IsFiniteMeasure P] [Approximable 𝓕 P]`.
+
+The protected `doob_meyer_normalized` theorem is still blocked by its weaker signature, so I left its existing `sorry`s in place and documented the exact missing assumptions in [task result](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md:1).
+
+Verification:
+`lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` succeeded.
+`lake build` succeeded. Existing project `sorry` warnings remain.

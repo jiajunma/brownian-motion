@@ -1,0 +1,17 @@
+Plan phase complete for iter-004.
+
+Set the next prover objective to [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean): add a normalized Doob-Meyer choice layer, retarget `predictablePart`/`martingalePart` to it if feasible, and add `predictablePart_bot_eq_zero`. The plan explicitly avoids redoing Brownian increment work and stops before full uniqueness unless the finite-variation local-martingale zero theorem is available.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [iter-004 plan](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-004/plan.md)
+- [iter-004 objectives](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-004/objectives.md)
+- Blueprint prose in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) and [stochastic_integral.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex)
+
+Verification:
+- `git diff --check` passed.
+- Processed prover result file was cleared.
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` passed with the expected existing `doob_meyer` sorry warning.

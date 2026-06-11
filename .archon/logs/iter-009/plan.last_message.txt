@@ -1,0 +1,13 @@
+Updated the plan for iter 009.
+
+The prover objective now targets only [QuadraticVariation.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariation.lean:93): move `quadraticVariation` into a strengthened usual-assumption section matching normalized Doob-Meyer, using a fresh time-index context to avoid the partial-order mismatch.
+
+I also updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:10)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md:7)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md:6)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md:10)
+- [stochastic_integral.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex:349)
+- iter sidecars under `.archon/iter/iter-009/`
+
+Verification: `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` currently fails at line 99 with the expected missing `ConditionallyCompleteLinearOrderBot` and `IsCadlag` order-instance mismatch. The next prover round is scoped to fix that and then run `lake build` to identify the Brownian checkpoint.

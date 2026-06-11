@@ -1,0 +1,23 @@
+Reading additional input from stdin...
+2026-06-07T11:14:36.877174Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+lemma _root_.MeasureTheory.Martingale.integral_mul_increment_eq_zero
+    {κ Ω' : Type*} [LinearOrder κ]
+    {mΩ' : MeasurableSpace Ω'} {P' : Measure Ω'} {𝓕' : Filtration κ mΩ'}
+    [IsFiniteMeasure P'] {N : κ → Ω' → ℝ} (hN : Martingale N 𝓕' P')
+    {a b c d : κ} (hab : a ≤ b) (hbc : b ≤ c) (hcd : c ≤ d)
+    (hprod : Integrable (fun ω => (N b ω - N a ω) * (N d ω - N c ω)) P') :
+    ∫ ω, (N b ω - N a ω) * (N d ω - N c ω) ∂P' = 0 := by
+  exact hN.integral_increment_mul_increment_eq_zero hab hbc hcd hprod
+
+/-- If a real random variable has zero square integral, then it is zero almost surely. -/
+lemma _root_.MeasureTheory.ae_eq_zero_of_integral_sq_eq_zero
+    {Ω' : Type*} {mΩ' : MeasurableSpace Ω'} {P' : Measure Ω'} {X : Ω' → ℝ}
+    (hXsq_int : Integrable (fun ω => X ω ^ 2) P')
+2026-06-07T11:19:21.545866Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+  have hbc : u (i + 1) ≤ u j := hu (Nat.succ_le_of_lt hij)
+  have hcd : u j ≤ u (j + 1) := hu (Nat.le_succ j)
+  exact hN.integral_increment_mul_increment_eq_zero hab hbc hcd hprod
+
+/-- If a real random variable has zero square integral, then it is zero almost surely. -/
+lemma _root_.MeasureTheory.ae_eq_zero_of_integral_sq_eq_zero
+    {Ω' : Type*} {mΩ' : MeasurableSpace Ω'} {P' : Measure Ω'} {X : Ω' → ℝ}

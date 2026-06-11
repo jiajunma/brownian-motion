@@ -1,0 +1,14 @@
+Plan phase complete.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-007/plan.md)
+- [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-007/objectives.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+
+Next prover target is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, focused on the remaining local-martingale normalization gap `IsLocalMartingale (M + C) 𝓕 P`. The integrable-sup branch is now recorded as reduced to the compiled usual-condition helper plus a signature blocker.
+
+Verification: `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` succeeds with the two expected `sorry` warnings.

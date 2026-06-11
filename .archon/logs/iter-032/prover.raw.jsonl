@@ -1,0 +1,7 @@
+Reading additional input from stdin...
+2026-06-07T18:35:09.961468Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+/- Event-localized terminal a.e.-zero form of the continuous-path, variation-bounded
+explicit-mesh endpoint.  A localized martingale `Z` is zero at the terminal time by the
+global theorem, and terminal agreement transfers that conclusion to the original process on
+the event `E`. -/
+lemma _root_.MeasureTheory.Martingale.eq_zero_on_event_of_bounded_continuous_finiteVariation_of_variation_bound_continuousOn

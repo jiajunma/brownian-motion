@@ -1,0 +1,11 @@
+Plan phase complete.
+
+I processed the Doob-Meyer prover result, cleared `.archon/task_results/`, and updated the next prover objective to focus on:
+
+`MeasureTheory.Martingale.integral_sq_terminal_eq_partition_sq_sum_of_bound`
+
+This is now recorded in [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14), with the active gap at `DoobMeyer.lean:1027`.
+
+I also updated the Doob-Meyer blueprint section in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:1740), plus `task_pending.md`, `task_done.md`, `STRATEGY.md`, and the iteration sidecars under `.archon/iter/iter-025/`.
+
+Validation: `git diff --check` passed for the touched files. I did not rerun Lean since this phase only changed planning/blueprint state, not `.lean` proofs.

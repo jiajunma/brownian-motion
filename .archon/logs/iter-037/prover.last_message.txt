@@ -1,0 +1,11 @@
+Implemented `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc` in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:665). The proof handles the inactive indicator branch as constant zero, the `τ ω = ⊤` branch by equality with the original path, and the finite stop branch by composing with `s ↦ min s a`.
+
+Recorded the prover handoff in [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md:1).
+
+Verification passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Existing open `DoobMeyer.lean` gaps remain unchanged: actual `sorry`s at lines 1969 and 2191.

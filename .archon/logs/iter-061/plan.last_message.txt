@@ -1,0 +1,9 @@
+Plan phase complete for iter 061.
+
+I set the next prover objective to add:
+
+`MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_pre_stop_bound_variation_bound_original_continuousOn_of_dense_left`
+
+Backed by the new blueprint block in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:3777). I updated `PROGRESS.md`, `task_pending.md`, `task_done.md`, `STRATEGY.md`, and the iter sidecars under `.archon/iter/iter-061/`.
+
+I did not edit Lean files or run a full build this phase. I did run Lean LSP diagnostics on the relevant Doob-Meyer region; it reported no errors. The next prover objective includes the usual `lake env lean ...` and `lake build` verification sequence.

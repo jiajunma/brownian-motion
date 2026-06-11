@@ -1,0 +1,20 @@
+Review for iter-057 is complete.
+
+Wrote the required files:
+
+- `.archon/proof-journal/sessions/session_57/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_57/summary.md`
+- `.archon/proof-journal/sessions/session_57/recommendations.md`
+- `.archon/iter/iter-057/review.md`
+- `.archon/PROJECT_STATUS.md`
+- `.archon/TO_USER.md`
+
+Verified:
+
+- `jq` validates `milestones.jsonl`
+- `lean_diagnostic_messages` clean on the new Doob-Meyer block
+- `lean_verify` clean for all three new declarations
+- `lake env lean` passed for `DoobMeyer`, `QuadraticVariation`, and `QuadraticVariationBrownian`
+- `lake build` passed, 3312 jobs
+
+No manual blueprint marker changes were made, and I did not touch `\leanok`.

@@ -1,0 +1,8 @@
+Plan phase complete for iter 016.
+
+Updated the Archon state to target `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_noninitial_analytic` in [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md), refreshed pending/done state, and cleared the processed prover report from `.archon/task_results/`.
+
+I also updated the Doob-Meyer blueprint in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:1462) with the new predictable-past lemmas and analytic-core theorem, then wrote the iter sidecars:
+[plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-016/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-016/objectives.md).
+
+No Lean files were edited this phase, so I did not rerun `lake build`.

@@ -1,0 +1,26 @@
+Reading additional input from stdin...
+2026-06-09T13:03:19.391467Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex:
+\begin{proof}
+
+\leanok
+The candidate Doob--Meyer decomposition of \(B_t^2\) is
+\[
+  B_t^2 = (B_t^2-t) + t.
+\]
+By Lemma~\ref{lem:martingale_brownian_sq_sub_time}, the first summand is a
+martingale, hence a local martingale, and by
+Lemma~\ref{lem:isCadlag_brownian_sq_sub_time} it has càdlàg paths.  The second
+summand is the deterministic time process \(T\).  The preceding deterministic
+lemmas show that \(T\) is strongly predictable, strongly progressive, càdlàg,
+has locally integrable running supremum, is nondecreasing pathwise, and starts
+from zero.
+
+The squared Brownian process used by the generic quadratic-variation
+definition is \(X_t=\|B_t\|^2=B_t^2\).  The displayed identity is therefore a
+normalized Doob--Meyer decomposition of \(X\), with martingale part
+\(B_t^2-t\) and predictable part \(T_t=t\).  Applying the normalized
+predictable-part comparison theorem identifies the choice-based predictable
+part used in \(\operatorname{brownianQuadraticVariation}\) with \(T\) at the
+fixed time \(t\), almost surely.
+
+\end{proof}

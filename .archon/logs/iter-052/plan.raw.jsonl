@@ -1,0 +1,9 @@
+Reading additional input from stdin...
+2026-06-08T17:19:03.224835Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+On the intersection, \(N_t=N_s=0\), so
+\(N_t=0\) almost surely.
+\end{proof}
+
+\begin{lemma}\label{lem:Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_original_continuousOn_of_neBot_left}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:stoppedProcess_indicator_continuousOn_Icc, lem:Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_continuousOn_of_neBot_left}
+  \lean{MeasureTheory.Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_original_continuousOn_of_neBot_left}

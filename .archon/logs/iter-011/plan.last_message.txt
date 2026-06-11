@@ -1,0 +1,14 @@
+Iteration 011 plan is ready.
+
+I set the next prover objective to [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14): repair the Doob-Meyer choice layer so the finite-variation part carries `IsStronglyPredictable`, add `isStronglyPredictable_predictablePart`, and leave the Brownian identity deferred.
+
+I also updated the blueprint to make the target honest:
+- Brownian quadratic variation is now framed as fixed-time a.e equality / later indistinguishability, not raw pointwise choice equality.
+- The false finite-variation local-martingale uniqueness route was replaced with the predictable finite-variation version.
+- The older continuous finite-variation theorem label in `local_martingales.tex` was renamed to avoid confusion.
+
+The iteration sidecars are written at:
+- [.archon/iter/iter-011/plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-011/plan.md:1)
+- [.archon/iter/iter-011/objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-011/objectives.md:1)
+
+The prior task result was processed and `.archon/task_results/` is empty. I did not run Lean, since this phase only changed Archon state and blueprint planning files.

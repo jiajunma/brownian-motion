@@ -1,0 +1,17 @@
+Implemented honest partial progress in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:595).
+
+Added/closed martingale orthogonality helpers:
+- `integral_mul_increment_eq_zero_of_stronglyMeasurable`
+- `integral_increment_mul_increment_eq_zero`
+- repaired `integral_mul_increment_eq_zero` to delegate to the proved helper
+- wired the orthogonality ingredient into the active bounded-continuous reduction
+
+I did not close the main analytic bridge. The remaining scoped `sorry` is still at the bounded-continuous reduction [DoobMeyer.lean:866](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:866); the other `sorry` is the excluded weak decomposition [DoobMeyer.lean:1088](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:1088).
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` passes
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` passes
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` passes
+- `lake build` passes
+
+Task handoff written to [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md).

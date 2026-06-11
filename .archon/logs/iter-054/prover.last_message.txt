@@ -1,0 +1,17 @@
+Implemented the new wrapper in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:2955):
+
+`MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn_of_left_branch`
+
+It transfers the original-process horizon and variation bounds to each stopped/indicator localization via `MeasureTheory.ae_stoppedProcess_indicator_bound_variation_on_Icc`, then calls the closed stopped-bound left-branch connector. No theorem statements were weakened and no new `sorry` was introduced.
+
+Wrote the prover handoff at `.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md`.
+
+Verification passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining known gaps:
+- [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3035): predictable finite-variation reduction, actual `sorry` at line 3071.
+- [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3288): public weak Doob-Meyer theorem, actual `sorry` at line 3293.

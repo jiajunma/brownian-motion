@@ -1,0 +1,73 @@
+Reading additional input from stdin...
+2026-06-07T10:39:14.246871Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+\end{proof}
+
+
+\begin{lemma}\label{lem:Martingale.eq_zero_of_bounded_continuous_finiteVariation_core}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:BoundedVariationOn.sq_increment_sum_tendsto_zero_of_uniform_bound}
+  \lean{MeasureTheory.Martingale.eq_zero_of_bounded_continuous_finiteVariation_core}
+Let \(M\) be a real-valued true martingale with \(M_\bot=0\).  Fix a
+deterministic time \(t>\bot\).  Assume that on the deterministic horizon
+[\(\bot,t]\) the paths are continuous, have bounded variation, and are bounded
+by a deterministic integrable constant.  Then \(M_t=0\) almost surely.
+\end{lemma}
+
+\begin{proof}
+Choose finite deterministic partitions
+\(\pi_n=\{\bot=s^n_0\le \cdots \le s^n_{k_n}=t\}\) whose mesh tends to zero.
+For a martingale, increments over disjoint deterministic intervals are
+orthogonal in expectation: if \(a\le b\le c\le d\), then
+\[
+  \mathbb E[(M_b-M_a)(M_d-M_c)] = 0.
+\]
+Indeed \(M_b-M_a\) is \(\mathcal F_b\)-measurable and integrable, while the
+martingale property gives
+\(\mathbb E[M_d-M_c\mid \mathcal F_b]=0\) when \(b\le c\).
+Expanding the square of the telescoping sum over a partition therefore gives
+\[
+  \mathbb E[M_t^2]
+  =
+  \sum_i \mathbb E[(M_{s^n_{i+1}}-M_{s^n_i})^2].
+\]
+
+For each sample point, continuity on \([\bot,t]\) implies that the largest
+increment along \(\pi_n\) tends to \(0\).  Bounded variation on the same
+horizon and
+Lemma~\ref{lem:BoundedVariationOn.sq_increment_sum_tendsto_zero_of_uniform_bound}
+then imply that the pathwise square-increment sum tends to \(0\).  The
+deterministic boundedness of the stopped process supplies an integrable
+dominating random variable for these square-increment sums.  Dominated
+convergence sends the right-hand side above to \(0\), so
+\(\mathbb E[M_t^2]=0\).  Since \(M_t^2\ge0\), the standard nonnegative-integral
+criterion gives \(M_t^2=0\) almost surely, hence \(M_t=0\) almost surely.
+\end{proof}
+
+
+\begin{lemma}\label{lem:Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:Martingale.eq_zero_of_predictable_finiteVariation_past_measurable_zero_increment, lem:LocallyBoundedVariationOn.exists_tendsto_left_univ, lem:Martingale.eq_zero_of_bounded_continuous_finiteVariation_core}
+  \lean{MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous}
+Let \(M\) be a strongly predictable càdlàg true martingale with \(M_0=0\),
+and suppose every path has locally bounded variation.  For every
+deterministic time \(t>0\), the bounded-continuous finite-variation bridge
+2026-06-07T10:42:24.025452Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md:
+- [ ] `BrownianMotion/StochasticIntegral/DoobMeyer.lean:705,917` — 2 sorries: `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous` is the active predictable finite-variation true-martingale bridge. The next planned split is the bounded continuous finite-variation core helper `MeasureTheory.Martingale.eq_zero_of_bounded_continuous_finiteVariation_core`; the deterministic square-increment estimates are closed, and `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_value_zero`, `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_past_condExp_zero`, the public analytic theorem, public non-initial theorem, discrete predictable wrapper, main true-martingale theorem, stopped-local wrapper, and `IsLocalSubmartingale.predictablePart_eq_of_normalized_decomposition` have no internal `sorry` beyond this dependency. The original weak local Doob-Meyer decomposition remains as the long upstream theorem.
+2026-06-07T10:43:34.067454Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:
+## Current Objectives
+
+1. **`BrownianMotion/StochasticIntegral/DoobMeyer.lean`** — Blueprint: `chapters/doob_meyer.tex` (lemmas `lem:Martingale.eq_zero_of_bounded_continuous_finiteVariation_core`, `lem:Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous`, `lem:Martingale.eq_zero_of_predictable_finiteVariation_value_zero`).
+
+   Primary target: close `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous`, the remaining predictable finite-variation true-martingale uniqueness bridge at the current `DoobMeyer.lean:705`.
+
+   First try to formalize the bounded continuous finite-variation core identified in the blueprint, preferably as
+   `MeasureTheory.Martingale.eq_zero_of_bounded_continuous_finiteVariation_core`. The exact helper hypotheses may be chosen to match the formal API, but mathematically it should prove: for a bounded continuous true martingale on a deterministic horizon whose paths have bounded variation, the fixed-time terminal value is zero a.e. Use martingale increment orthogonality along deterministic finite partitions, the closed deterministic finite-variation estimate, and dominated convergence.
+
+   Then use that core to attack the current full statement. The full statement still has càdlàg, strong predictability, and locally bounded variation hypotheses rather than actual continuity/boundedness assumptions. Strong predictability must be used only through the predictable-past section theorem; do not assert that `N t - N s` is `𝓕 s`-measurable unless that has been proved for the specific subcase. If the predictable-jump removal or the general ordered-time partition construction is too large, it is acceptable to leave the single existing gap at a strictly deeper helper, but do not add unrelated new `sorry` terms and do not weaken the existing public theorem statements.
+
+   Verified/source-inspected tools available this iteration:
+   `[verified]` `MeasureTheory.Martingale.eq_zero_of_predictable'` is Mathlib's discrete `ℕ` predictable-martingale theorem only; `[verified]` `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_past_measurable_zero_increment`; `[verified]` `LocallyBoundedVariationOn.exists_tendsto_left_univ`; `[verified]` `BoundedVariationOn.sq_increment_sum_tendsto_zero_of_uniform_bound`; `[verified]` `MeasureTheory.Martingale.stoppedProcess_indicator`; `[verified]` `MeasureTheory.IsStronglyPredictable.stoppedProcess_indicator`; `[verified]` `ProbabilityTheory.locallyBoundedVariationOn_stoppedProcess_indicator`.
+
+   Non-targets: do not spend this iteration on the old weak local Doob-Meyer decomposition `ProbabilityTheory.IsLocalSubmartingale.doob_meyer` unless closing the uniqueness bridge immediately exposes a trivial downstream repair. Do not alter theorem statements to make the goal easier. Do not work on `QuadraticVariation.lean` this round except for a minimal import/build repair forced by `DoobMeyer.lean`.
+
+   Verification: run `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`; if it passes, run `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`, `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`, and then `lake build`. The task result must report any new helper declarations, whether `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous` is closed, and the final sorry/warning lines.
+2026-06-07T10:44:06.630517Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:
+1. **`BrownianMotion/StochasticIntegral/DoobMeyer.lean`** — Blueprint: `chapters/doob_meyer.tex` (lemmas `lem:Martingale.integral_mul_increment_eq_zero_of_stronglyMeasurable`, `lem:Martingale.integral_increment_mul_increment_eq_zero`, `lem:Martingale.integral_mul_increment_eq_zero`, `lem:Martingale.eq_zero_of_bounded_continuous_finiteVariation_core`, `lem:Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction`, `lem:Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous`).

@@ -1,0 +1,7 @@
+Plan phase complete for iter 013.
+
+Updated the next prover objective in [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) to continue `DoobMeyer.lean`, now focused on stopped predictability, stopped locally bounded variation, and moving the remaining uniqueness gap into a true-martingale bridge if it cannot be closed.
+
+Also updated the Doob–Meyer blueprint in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex) with the new informal lemmas/theorem, reconciled `task_pending.md`, `task_done.md`, and `STRATEGY.md`, wrote the iter sidecars, and cleared the processed prover result.
+
+No Lean build was run this phase; the prior prover result reported `lake build` passed, and this turn only changed planning/blueprint/state files.

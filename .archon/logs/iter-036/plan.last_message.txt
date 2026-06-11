@@ -1,0 +1,12 @@
+Plan phase is complete for iter-036.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md) with the next prover objective for `DoobMeyer.lean`.
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:1538) with blueprint blocks for the a.e. stopped/indicator wrapper and the new localizing-sequence wrapper.
+- `.archon/task_pending.md`, `.archon/task_done.md`, `.archon/STRATEGY.md`.
+- Iter sidecars: [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-036/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-036/objectives.md).
+
+Next prover target is exactly:
+`MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_continuousOn`
+
+I did not run Lean because this phase only edited plan/state/blueprint files, not `.lean` files.

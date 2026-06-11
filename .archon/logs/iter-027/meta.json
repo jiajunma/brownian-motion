@@ -1,0 +1,9 @@
+{
+  "iteration": 27,
+  "stage": "prover",
+  "mode": "serial",
+  "startedAt": "2026-06-07T12:16:01Z",
+  "plan": {
+    "status": "running"
+  }
+}

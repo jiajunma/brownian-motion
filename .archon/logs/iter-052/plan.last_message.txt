@@ -1,0 +1,5 @@
+Plan phase complete for iter 052.
+
+Updated the next prover objective to `MeasureTheory.Martingale.eq_zero_of_predictable_bottom_immediate` in [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md:14), added its blueprint block in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:3436), and recorded the iteration rationale/objectives in the iter-052 sidecars.
+
+Processed the prior Doob-Meyer task result into `task_pending.md` / `task_done.md`, refreshed `STRATEGY.md`, and cleared `.archon/task_results/DoobMeyer.lean.md`. I ran LSP diagnostics on the relevant Doob-Meyer regions; I did not run a full Lean build because this phase only changed Archon state and blueprint text.

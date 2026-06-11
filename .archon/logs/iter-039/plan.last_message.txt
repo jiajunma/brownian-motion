@@ -1,0 +1,16 @@
+Plan phase complete for iter-039.
+
+I processed the prior Doob-Meyer result, recorded the closed `MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn`, and set the next prover objective to the new jump-removal bookkeeping lemma:
+
+`MeasureTheory.Martingale.ae_eq_leftLim_of_left_approach_past_measurable_increments`
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+- [iter-039 plan](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-039/plan.md)
+- [iter-039 objectives](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-039/objectives.md)
+
+I did not run a full Lean build because this phase only changed Archon state and blueprint prose, not `.lean` files.

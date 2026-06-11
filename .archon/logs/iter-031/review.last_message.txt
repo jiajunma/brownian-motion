@@ -1,0 +1,9 @@
+Review artifacts are written for `session_31` and `iter-031`:
+
+- `.archon/proof-journal/sessions/session_31/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_31/summary.md`
+- `.archon/proof-journal/sessions/session_31/recommendations.md`
+- `.archon/iter/iter-031/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Validation done: `milestones.jsonl` parses with `jq`, diff whitespace check passed, and I verified both new Doob-Meyer helpers with Lean LSP `lean_verify` as no `sorryAx` dependencies. I did not edit `.lean` files or touch blueprint `\leanok` markers.

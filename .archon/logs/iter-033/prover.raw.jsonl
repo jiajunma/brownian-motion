@@ -1,0 +1,21 @@
+Reading additional input from stdin...
+2026-06-07T19:01:30.101179Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+      change stoppedProcess (fun i ↦ {ω | (⊥ : κ) < τ n ω}.indicator (N i)) (τ n)
+        ⊥ ω = 0
+      rw [stoppedProcess]
+      exact Set.indicator_of_not_mem hω _
+2026-06-07T19:02:05.940115Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+      change stoppedProcess (fun i ↦ {ω | (⊥ : κ) < τ n ω}.indicator (N i)) (τ n)
+        ⊥ ω = 0
+      rw [stoppedProcess]
+      exact Set.indicator_of_notMem hω _
+2026-06-07T19:02:15.155342Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+      change stoppedProcess (fun i ↦ {ω | (⊥ : κ) < τ n ω}.indicator (N i)) (τ n)
+        ⊥ ω = 0
+      rw [stoppedProcess]
+      exact Set.indicator_of_notMem hω _
+2026-06-07T19:02:40.448323Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:
+      change stoppedProcess (fun i ↦ {ω | (⊥ : κ) < τ n ω}.indicator (N i)) (τ n)
+        ⊥ ω = 0
+      rw [stoppedProcess]
+      rw [Set.indicator_of_notMem hω]

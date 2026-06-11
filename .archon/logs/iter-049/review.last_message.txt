@@ -1,0 +1,18 @@
+Review completed for iter-049/session_49.
+
+Wrote the required files:
+
+- [.archon/proof-journal/sessions/session_49/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_49/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_49/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_49/summary.md)
+- [.archon/proof-journal/sessions/session_49/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_49/recommendations.md)
+- [.archon/iter/iter-049/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-049/review.md)
+- Updated [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md) Knowledge Base only.
+
+Verification rerun and passed:
+
+- Lean LSP diagnostics on the new Doob-Meyer region
+- `lean_verify` for both new declarations
+- `lake env lean` for `DoobMeyer`, `QuadraticVariation`, `QuadraticVariationBrownian`
+- `lake build`
+
+Key outcome: prover closed the nontrivial-left sequence extraction helper and the stopped-bound wrapper using it. Project sorry count remains 23.

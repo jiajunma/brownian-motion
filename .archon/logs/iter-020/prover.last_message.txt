@@ -1,0 +1,14 @@
+Completed and verified the Brownian fixed-time quadratic-variation checkpoint.
+
+The target file now contains the deterministic time helpers at [QuadraticVariationBrownian.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean:264) and the exact theorem
+`ProbabilityTheory.quadraticVariation_brownian (t : ℝ≥0) :
+  brownianQuadraticVariation t =ᵐ[gaussianLimit] fun _ => (t : ℝ)`
+at [line 376](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean:376).
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` passed with no output.
+- `QuadraticVariation.lean` and `DoobMeyer.lean` passed; only their pre-existing `sorry` warnings remain.
+- `lake build` passed.
+- Target scan found no `sorry`, `admit`, `axiom`, `native_decide`, or `proof_wanted`.
+
+The Archon task result is already written at [.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariationBrownian.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_QuadraticVariationBrownian.lean.md:1).

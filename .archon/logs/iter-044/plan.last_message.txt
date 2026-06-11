@@ -1,0 +1,14 @@
+Plan phase complete for iter-044.
+
+Updated:
+- `.archon/PROGRESS.md` with the next Doob-Meyer prover objective.
+- `.archon/task_pending.md` and `.archon/task_done.md`.
+- `.archon/STRATEGY.md` with the current subphase.
+- `blueprint/src/chapters/doob_meyer.tex` with two new informal lemma blocks.
+- `.archon/iter/iter-044/plan.md` and `objectives.md`.
+
+Next prover target is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, specifically:
+- `MeasureTheory.Martingale.integrable_jump_leftLim_of_left_approach_of_bound`
+- `MeasureTheory.Martingale.ae_eq_leftLim_of_left_approach_past_setIntegral_zero_of_bound_no_integrability`
+
+I did not run Lean builds because this phase only edits planning/blueprint state, not Lean proofs.

@@ -1,0 +1,5 @@
+Plan phase complete for iter 017.
+
+Updated the next prover objective to target `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_past_condExp_zero` in [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md). The Doob-Meyer blueprint now includes the new helper split in [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex), and the iter sidecars are written at [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-017/plan.md) and [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-017/objectives.md).
+
+I merged the latest prover result into `task_pending.md` / `task_done.md`, archived it under `.archon/logs/iter-017/task_results-archive/`, and cleared `.archon/task_results/`. `git diff --check` passed for the touched planning and blueprint files. I did not run `lake build` in this plan phase; the prover’s reported build results were ingested.

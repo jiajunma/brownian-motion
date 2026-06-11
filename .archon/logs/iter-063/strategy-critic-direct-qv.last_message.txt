@@ -1,0 +1,3 @@
+Wrote the strategy critic report to [.archon/task_results/strategy-critic-direct-qv.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/strategy-critic-direct-qv.md).
+
+Overall verdict: `CHALLENGE`. The direct Brownian QV lane is sound for the immediate theorem, but the generic QV route still defers required Doob-Meyer/FV/UI/cadlag/Komlos infrastructure behind vague “once active” phases.

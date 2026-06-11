@@ -1,0 +1,17 @@
+Implemented the two requested helper lemmas in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:880):
+
+- `MeasureTheory.Martingale.stronglyMeasurable_leftLim_past_of_left_approach`
+- `MeasureTheory.Martingale.stronglyMeasurable_jump_leftLim_past_of_left_approach`
+
+The proofs follow the planned past-sigma route: enlarge `N (u n)` measurability into `⨆ s : {s // s < t}, 𝓕' s`, take the pointwise left-limit via `stronglyMeasurable_of_tendsto`, then subtract from the strongly predictable past-measurable `N t`.
+
+Verification passed:
+
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Wrote the Archon handoff at [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md:1).
+
+Remaining expected gaps are unchanged: `DoobMeyer.lean` still has the predictable finite-variation reduction `sorry` at line 2085 and the weak `doob_meyer` theorem `sorry` at line 2307.

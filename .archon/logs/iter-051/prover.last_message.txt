@@ -1,0 +1,15 @@
+Implemented the two requested helpers in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:744):
+
+- `MeasureTheory.IsStronglyPredictable.stronglyMeasurable_left_isolated_past`
+- `MeasureTheory.Martingale.eq_zero_of_predictable_left_isolated_of_previous`
+
+I also wrote the prover report at [.archon/task_results/DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/DoobMeyer.lean.md:1).
+
+Verification passed:
+
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining expected openings: `eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction` still has its `sorry` at [DoobMeyer.lean:2960](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:2960), and the public weak `doob_meyer` theorem still has its `sorry` at [DoobMeyer.lean:3182](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3182). No new `sorry`s were introduced.

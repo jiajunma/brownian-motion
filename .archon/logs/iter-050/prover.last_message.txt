@@ -1,0 +1,17 @@
+Implemented the two requested wrappers in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:2742):
+
+- `MeasureTheory.Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_of_bound_variation_bound_original_continuousOn_of_neBot_left`
+- `MeasureTheory.Martingale.eq_zero_and_leftLim_eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_original_continuousOn_of_neBot_left`
+
+They are thin, faithful wrappers: the first extracts the left-approaching sequence from `hleft`, and the second derives stopped-piece continuity from original-path continuity via `MeasureTheory.stoppedProcess_indicator_continuousOn_Icc`.
+
+Verification passed:
+
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining expected openings in `DoobMeyer.lean` are unchanged in substance: `eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction` at declaration line 2886, actual `sorry` line 2922, and `ProbabilityTheory.IsLocalSubmartingale.doob_meyer` at declaration line 3139, actual `sorry` line 3144.
+
+Handoff written to [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md).

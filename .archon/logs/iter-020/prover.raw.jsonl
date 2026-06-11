@@ -1,0 +1,26 @@
+Reading additional input from stdin...
+2026-06-07T09:56:45.763768Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean:
+      _ =ᵐ[gaussianLimit] (fun omega => brownian s omega ^ 2 - (s : ℝ)) := by
+        filter_upwards with omega
+        dsimp only [past]
+        simp
+
+/-- The canonical Brownian motion is a local martingale with respect to its natural filtration. -/
+lemma isLocalMartingale_brownian :
+    IsLocalMartingale brownian brownianNaturalFiltration gaussianLimit :=
+  Martingale.IsLocalMartingale martingale_brownian isCadlag_brownian
+
+section UsualConditions
+
+variable [brownianNaturalFiltration.IsComplete gaussianLimit]
+variable [brownianNaturalFiltration.IsRightContinuous]
+
+/-- The quadratic variation process attached to the canonical Brownian motion. -/
+noncomputable abbrev brownianQuadraticVariation : ℝ≥0 → (ℝ≥0 → ℝ) → ℝ :=
+  letI : Approximable brownianNaturalFiltration gaussianLimit :=
+    brownianNaturalFiltration_approximable
+  quadraticVariation isLocalMartingale_brownian isCadlag_brownian
+
+end UsualConditions
+
+end ProbabilityTheory

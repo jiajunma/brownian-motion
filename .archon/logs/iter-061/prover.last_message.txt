@@ -1,0 +1,11 @@
+Implemented the dense-left pre-stop wrapper in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3259). The proof only builds the nontrivial-left branch from `Filter.nhdsWithin_Iio_self_neBot_of_bot_lt ht` and delegates to the existing pre-stop left-branch wrapper, forwarding all analytic hypotheses unchanged. I moved that filter helper earlier so the new lemma sits at the requested location.
+
+Wrote the Archon handoff at [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md:1).
+
+Verification passed:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean`
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean`
+- `lake build`
+
+Remaining known open items are unchanged: `eq_zero_of_predictable_finiteVariation_bounded_continuous_reduction` at [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3489) and `IsLocalSubmartingale.doob_meyer` at [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:3742).

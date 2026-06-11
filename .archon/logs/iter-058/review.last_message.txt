@@ -1,0 +1,16 @@
+Review complete for iter-058/session_58.
+
+Wrote the required files:
+- `.archon/proof-journal/sessions/session_58/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_58/summary.md`
+- `.archon/proof-journal/sessions/session_58/recommendations.md`
+- `.archon/iter/iter-058/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Also wrote `.archon/TO_USER.md` per the local review prompt.
+
+Verification rerun:
+- `lean_verify` on both new declarations passed with no source-scan warnings.
+- `lake env lean` passed for DoobMeyer, QuadraticVariation, and QuadraticVariationBrownian.
+- `lake build` passed.
+- Current textual `sorry` count under `BrownianMotion` remains 23.

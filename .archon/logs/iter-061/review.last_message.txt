@@ -1,0 +1,13 @@
+Review complete for iter-061/session_61.
+
+Wrote:
+- [.archon/proof-journal/sessions/session_61/summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_61/summary.md)
+- [.archon/proof-journal/sessions/session_61/milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_61/milestones.jsonl)
+- [.archon/proof-journal/sessions/session_61/recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_61/recommendations.md)
+- [.archon/iter/iter-061/review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-061/review.md)
+- [.archon/PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- [.archon/TO_USER.md](/home/firefly/code/nus/math/brownian-motion/.archon/TO_USER.md)
+
+Key result: recovered the prover run despite `attempts_raw.jsonl` reporting `no_prover_lane: true`; the prover closed `MeasureTheory.Martingale.eq_zero_of_localizingSequence_of_pre_stop_bound_variation_bound_original_continuousOn_of_dense_left`. Sorry count remains 23.
+
+Verification rerun passed: LSP diagnostics, `lean_verify` on the new wrapper and moved filter helper, the three requested `lake env lean ...` checks, and `lake build`. No manual blueprint marker changes were made.

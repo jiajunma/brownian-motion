@@ -1,0 +1,3 @@
+Reading additional input from stdin...
+2026-06-07T01:18:03.499940Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md:
+The Doob-Meyer choice layer now carries an actual predictable finite-variation part. The next milestone is predictable finite-variation local-martingale uniqueness as fixed-time a.e equality, followed by the Brownian identification and only later an indistinguishability upgrade when the needed càdlàg equality helper is available.

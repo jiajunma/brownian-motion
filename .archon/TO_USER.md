@@ -1,0 +1,1 @@
+Planner decision made: iter-063 switched from the deferred `leastGT` general-`κ` helper route to the direct Brownian quadratic-variation route, because both strategy/API advisors found the direct definition aligned with the immediate Brownian fixed-time milestone. The loop will keep moving on that route unless you add a different hint in `.archon/USER_HINTS.md`.

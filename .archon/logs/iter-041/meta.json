@@ -1,0 +1,38 @@
+{
+  "iteration": 41,
+  "stage": "prover",
+  "mode": "serial",
+  "startedAt": "2026-06-08T05:12:50Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 834
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 707
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 378
+  },
+  "sorry_count": 23,
+  "finalize": {
+    "innerGit": {
+      "sha": "692d4ca"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 31
+    }
+  },
+  "completedAt": "2026-06-08T05:52:09Z",
+  "wallTimeSecs": 2359
+}

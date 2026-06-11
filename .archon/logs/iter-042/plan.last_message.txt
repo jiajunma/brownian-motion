@@ -1,0 +1,14 @@
+Plan phase complete for iter-042.
+
+I updated the Doob-Meyer blueprint and Archon state to target the next prover step:
+
+- New objective in `BrownianMotion/StochasticIntegral/DoobMeyer.lean`
+- Target lemmas:
+  - `MeasureTheory.Martingale.setIntegral_increment_eq_zero_of_measurableSet`
+  - `MeasureTheory.Martingale.setIntegral_jump_leftLim_eq_zero_of_left_approach_of_dominated`
+- Updated `PROGRESS.md`, `STRATEGY.md`, `task_pending.md`, `task_done.md`
+- Wrote sidecars:
+  - `.archon/iter/iter-042/plan.md`
+  - `.archon/iter/iter-042/objectives.md`
+
+I did not run a Lean build because this phase only changed planning/blueprint state, not Lean code.

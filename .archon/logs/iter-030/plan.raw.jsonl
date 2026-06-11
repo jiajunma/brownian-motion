@@ -1,0 +1,15 @@
+Reading additional input from stdin...
+2026-06-07T17:29:26.884562Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+For each sample point, continuity on \([\bot,t]\) implies that the largest
+increment along \(\pi_n\) tends to zero.  This modulus depends on the sample
+point; no deterministic modulus is available from pathwise continuity alone.
+First prove the variation-bounded stopped subcase, where the total variation on
+[\bot,t]\) is also bounded by a deterministic constant.  In that subcase
+Lemma~\ref{lem:Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation_of_variation_bound_eventual_modulus}
+turns the pathwise increment moduli and deterministic variation bound into
+\(\int M_t^2\,dP=0\).  The full locally bounded-variation statement is obtained
+by stopping or localizing at increasing variation levels and then letting the
+level tend to infinity on the event where the localized process agrees with the
+original process up to \(t\).  The deterministic bound on \(M_t\) gives
+integrability of \(M_t^2\).
+\end{proof}

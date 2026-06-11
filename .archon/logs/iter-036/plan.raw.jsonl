@@ -1,0 +1,9 @@
+Reading additional input from stdin...
+2026-06-08T01:59:30.150792Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:
+Lemma~\ref{lem:Martingale.eq_zero_of_stoppedProcess_bounded_continuous_finiteVariation_of_variation_bound_continuousOn}.
+\end{proof}
+
+\begin{lemma}\label{lem:Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation}
+  \uses{def:Martingale, def:LocallyBoundedVariationOn, lem:Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation_of_variation_bound_continuousOn, lem:Martingale.eq_zero_of_bounded_continuous_finiteVariation_of_variation_bound_continuousOn}
+  \lean{MeasureTheory.Martingale.integral_sq_terminal_eq_zero_of_bounded_continuous_finiteVariation}
+Let \(M\) be a real-valued true martingale with \(M_\bot=0\).  Fix a

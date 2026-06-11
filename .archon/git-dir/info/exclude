@@ -1,0 +1,28 @@
+# Archon inner-repo excludes — managed by InnerGit._write_default_excludes
+# .archon/ tracking is handled by _stage_all (git add -f), not here:
+# outer .gitignore's `.archon/` rule wins over info/exclude, so any
+# `!.archon/` negation at this level would be silently ignored.
+# Build artifacts and OS junk.
+.lake/
+lake-packages/
+.DS_Store
+*.pyc
+__pycache__/
+.git/
+# Multi-lane worktrees live under .archon/lanes/<id>/ — each is its
+# own checkout sharing this same git-dir; the parent worktree must
+# not stage them or 'git add' would recurse into nested checkouts.
+.archon/lanes/
+# Secret env files anywhere in the worktree — provider keys, OAuth
+# tokens, DB passwords. The loop loads these via load_env_file() at
+# startup; they must not flow through inner-git time-travel either.
+# Note: `_stage_all` ALSO skips these by name when force-adding
+# `.archon/` children, since `git add -f` bypasses info/exclude.
+.env
+.env.local
+.env.*.local
+# Auto-generated lane provider settings ({"env": {ANTHROPIC_AUTH_TOKEN, …}})
+# materialize per-iteration in this directory. They embed API keys —
+# never commit them. The lane runtime regenerates them at the start
+# of each multilane round, so dropping them on disk is fine.
+.archon/multilane/lanes/

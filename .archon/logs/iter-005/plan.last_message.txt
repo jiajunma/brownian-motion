@@ -1,0 +1,10 @@
+Plan phase is complete. I narrowed the next prover objective to `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, specifically the two remaining gaps in `IsLocalSubmartingale.doob_meyer_normalized`.
+
+Updated:
+- [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [.archon/iter/iter-005/plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-005/plan.md)
+- [.archon/iter/iter-005/objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-005/objectives.md)
+- [blueprint/src/chapters/doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex:1160)
+- `.archon/task_pending.md`, `.archon/task_done.md`, `.archon/STRATEGY.md`
+
+Verification: `git diff --check` passed. I did not edit Lean files in this turn.

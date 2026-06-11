@@ -1,0 +1,13 @@
+Plan phase for iteration 058 is complete.
+
+Updated:
+- `.archon/PROGRESS.md` with the next prover objective for `DoobMeyer.lean`.
+- `.archon/task_pending.md`, `.archon/task_done.md`, `.archon/STRATEGY.md`.
+- `.archon/iter/iter-058/plan.md` and `objectives.md`.
+- `blueprint/src/chapters/doob_meyer.tex` with the new informal proof blocks.
+
+Next prover target: add the stopped/indicator horizon-bound lemmas from explicit pre-stop and active stop-value bounds:
+- `MeasureTheory.stoppedProcess_indicator_bound_on_Icc_of_pre_stop_bound`
+- `MeasureTheory.ae_stoppedProcess_indicator_bound_on_Icc_of_pre_stop_bound`
+
+I also processed and cleared the prior `DoobMeyer.lean` task result. No Lean verification was run because this phase only updated planning/blueprint state, not Lean code.

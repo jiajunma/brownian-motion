@@ -1,0 +1,17 @@
+Review complete for iter-038/session_38.
+
+Wrote the required files:
+
+- `.archon/proof-journal/sessions/session_38/milestones.jsonl`
+- `.archon/proof-journal/sessions/session_38/summary.md`
+- `.archon/proof-journal/sessions/session_38/recommendations.md`
+- `.archon/iter/iter-038/review.md`
+- `.archon/PROJECT_STATUS.md`
+
+Verification rerun and passed:
+
+- `lean_verify` on the new Doob-Meyer wrapper
+- `lake env lean` for `DoobMeyer.lean`, `QuadraticVariation.lean`, `QuadraticVariationBrownian.lean`
+- `lake build`
+
+Recorded the recurring `no_prover_lane: true` preprocessor mismatch, the solved theorem, unchanged `sorry` count of 23, current `sync_leanok` state, and the no-findings blueprint doctor result.

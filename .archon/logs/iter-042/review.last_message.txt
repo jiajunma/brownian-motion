@@ -1,0 +1,13 @@
+Review complete for iter-042/session_42.
+
+Wrote:
+- [summary.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_42/summary.md)
+- [milestones.jsonl](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_42/milestones.jsonl)
+- [recommendations.md](/home/firefly/code/nus/math/brownian-motion/.archon/proof-journal/sessions/session_42/recommendations.md)
+- [review.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-042/review.md)
+- Updated [PROJECT_STATUS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md)
+- Updated `.archon/TO_USER.md` with the planner decision notice.
+
+Verification rerun passed: focused LSP diagnostics, `lean_verify` for both new lemmas, the three Lean file checks, `lake build`, JSONL validation, and `git diff --check`.
+
+Project-wide textual `sorry` count remains 23.

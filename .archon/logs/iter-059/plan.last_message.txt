@@ -1,0 +1,17 @@
+Plan phase complete for iteration 059.
+
+Updated:
+- [PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+- [plan.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-059/plan.md)
+- [objectives.md](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-059/objectives.md)
+
+Processed and cleared the prior Doob-Meyer task result. The next prover objective is the closed-pre-stop stopped/indicator variation package:
+`BoundedVariationOn.eVariationOn_stoppedProcess_indicator_le_closed_pre_stop_Icc`,
+`BoundedVariationOn.stoppedProcess_indicator_variation_bound_on_Icc_of_closed_pre_stop_bound`,
+and `MeasureTheory.ae_stoppedProcess_indicator_bound_variation_on_Icc_of_pre_stop_bound`.
+
+I did not run Lean, since this phase only updated planning and blueprint state.

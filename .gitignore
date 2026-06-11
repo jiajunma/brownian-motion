@@ -48,7 +48,7 @@ Manuscript/_minted/*
 .lake/
 
 # Archon state directory
-.archon/
+# .archon/
 
 # Project-local agent helper tools
 .claude/

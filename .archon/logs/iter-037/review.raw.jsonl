@@ -1,0 +1,9 @@
+Reading additional input from stdin...
+2026-06-08T03:16:08.402186Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in /home/firefly/code/nus/math/brownian-motion/.archon/PROJECT_STATUS.md:
+- Iter-035 marker sync was current but still added no `\leanok` for newly closed stopped/indicator Doob-Meyer helper blocks.
+- Iter-036 repeated the `no_prover_lane: true` preprocessing false positive despite `meta.json`, `prover.jsonl`, and the Doob-Meyer task result showing a completed prover lane.
+- Iter-036 marker sync was current (`iter: 36`, added 0, removed 0) but added no `\leanok` for the newly closed stopped/localizing Doob-Meyer helper block.
+
+## Last Updated
+
+2026-06-08T10:16:39+08:00

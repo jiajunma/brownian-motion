@@ -1,0 +1,11 @@
+Implemented the discrete predictable finite-variation wrapper in [DoobMeyer.lean](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:538). It directly uses `MeasureTheory.Martingale.eq_zero_of_predictable'` and closes the normalized `N 0 = 0` conclusion.
+
+I also split the continuous theorem so the `t = ⊥` case is proved, and the remaining true continuous-time analytic gap is isolated at [eq_zero_of_predictable_finiteVariation_noninitial](/home/firefly/code/nus/math/brownian-motion/BrownianMotion/StochasticIntegral/DoobMeyer.lean:520). The local wrapper remains free of internal `sorry`.
+
+Verification:
+- `lake env lean BrownianMotion/StochasticIntegral/DoobMeyer.lean` passes, with expected `sorry` warnings at lines 520 and 622.
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariation.lean` passes, with its known deferred `sorry`.
+- `lake env lean BrownianMotion/StochasticIntegral/QuadraticVariationBrownian.lean` passes.
+- `lake build` succeeds.
+
+Wrote the handoff log to [.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_results/BrownianMotion_StochasticIntegral_DoobMeyer.lean.md).

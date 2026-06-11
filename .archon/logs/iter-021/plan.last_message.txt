@@ -1,0 +1,15 @@
+Plan phase completed.
+
+Updated:
+- [.archon/PROGRESS.md](/home/firefly/code/nus/math/brownian-motion/.archon/PROGRESS.md)
+- [.archon/STRATEGY.md](/home/firefly/code/nus/math/brownian-motion/.archon/STRATEGY.md)
+- [.archon/task_pending.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_pending.md)
+- [.archon/task_done.md](/home/firefly/code/nus/math/brownian-motion/.archon/task_done.md)
+- [iter-021 plan](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-021/plan.md)
+- [iter-021 objectives](/home/firefly/code/nus/math/brownian-motion/.archon/iter/iter-021/objectives.md)
+- [doob_meyer.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/doob_meyer.tex)
+- [stochastic_integral.tex](/home/firefly/code/nus/math/brownian-motion/blueprint/src/chapters/stochastic_integral.tex)
+
+The Brownian fixed-time theorem is marked landed and removed from active objectives. The next prover objective is `BrownianMotion/StochasticIntegral/DoobMeyer.lean`, targeting `MeasureTheory.Martingale.eq_zero_of_predictable_finiteVariation_bounded_continuous`, with a new blueprint core lemma for the bounded continuous finite-variation martingale argument.
+
+Processed task result was archived under `.archon/logs/iter-021/task_results-archive/`; `.archon/task_results/` is empty. I did not run `lake build` because only planning/state/blueprint files were edited.

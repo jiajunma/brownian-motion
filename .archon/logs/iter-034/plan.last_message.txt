@@ -1,0 +1,12 @@
+Plan phase complete for iter-034.
+
+Updated:
+- `.archon/PROGRESS.md` with one prover objective for `DoobMeyer.lean`.
+- `.archon/task_pending.md` and `.archon/task_done.md` with the iter-033 helper closures and current line numbers.
+- `.archon/STRATEGY.md` to reflect the next localizing-sequence stopped wrapper.
+- `blueprint/src/chapters/doob_meyer.tex` with the new informal lemma `lem:Martingale.eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_continuousOn`.
+- `.archon/iter/iter-034/plan.md` and `.archon/iter/iter-034/objectives.md`.
+
+Next prover target: add and prove `MeasureTheory.Martingale.eq_zero_of_localizingSequence_bounded_continuous_finiteVariation_of_variation_bound_continuousOn`, deriving stopped martingales from `MeasureTheory.Martingale.stoppedProcess_indicator` and the cover from `hτ.tendsto_top`, while keeping mesh, variation bounds, and stopped-process continuity explicit.
+
+I did not run Lean verification because this phase did not edit Lean files. I also left the processed task result file in place, following the plan-agent read-only boundary for `task_results/`.
