@@ -938,6 +938,203 @@ lemma measure_iInter_biUnion_exists_abs [IsFiniteMeasure μ]
 
 end CountableEvents
 
+/-! ### Selection of alternating tuples from frequent oscillation -/
+
+section Selection
+
+set_option linter.unusedSectionVars false
+
+variable {T : Set ι} {x d : ι} {a b : ℝ} {ω : Ω}
+
+/-- If `X` is frequently below `a` and frequently above `b` in the right-neighborhood filter of
+`x` within `T`, then arbitrarily many alternations occur in `T ∩ Ioo x d`. -/
+lemma exists_finset_altSet_of_frequently_right (hxd : x < d)
+    (hfa : ∃ᶠ s in 𝓝[>] x ⊓ 𝓟 T, X s ω < a)
+    (hfb : ∃ᶠ s in 𝓝[>] x ⊓ 𝓟 T, b < X s ω) (m : ℕ) :
+    ∃ F : Finset ι, ↑F ⊆ T ∩ Set.Ioo x d ∧ ω ∈ altSet X F a b m := by
+  classical
+  -- descending selection: even picks above `b`, odd picks below `a`
+  have hsel : ∀ k : ℕ, ∃ c : ℕ → ι, (∀ i, i + 1 < k → c (i + 1) < c i)
+      ∧ (∀ i < k, c i ∈ T ∩ Set.Ioo x d)
+      ∧ (∀ i < k, if Even i then b < X (c i) ω else X (c i) ω < a) := by
+    intro k
+    induction k with
+    | zero => exact ⟨fun _ ↦ d, by omega, by omega, by omega⟩
+    | succ k ih =>
+      obtain ⟨c, hdesc, hmem, hval⟩ := ih
+      -- previous lower endpoint
+      set u : ι := if hk : 0 < k then c (k - 1) else d with hu
+      have hxu : x < u := by
+        rw [hu]
+        split_ifs with hk
+        · exact (hmem (k - 1) (by omega)).2.1
+        · exact hxd
+      have hud : u ≤ d := by
+        rw [hu]
+        split_ifs with hk
+        · exact (hmem (k - 1) (by omega)).2.2.le
+        · exact le_rfl
+      have hU : Set.Ioo x u ∩ T ∈ 𝓝[>] x ⊓ 𝓟 T :=
+        Filter.inter_mem (Filter.mem_inf_of_left (Ioo_mem_nhdsGT hxu))
+          (Filter.mem_inf_of_right (Filter.mem_principal_self T))
+      have hpick : ∃ s, s ∈ Set.Ioo x u ∩ T
+          ∧ if Even k then b < X s ω else X s ω < a := by
+        by_cases hk : Even k
+        · simp only [if_pos hk]
+          obtain ⟨s, hs1, hs2⟩ := (hfb.and_eventually (Filter.eventually_of_mem hU
+            (fun s hs ↦ hs))).exists
+          exact ⟨s, hs2, hs1⟩
+        · simp only [if_neg hk]
+          obtain ⟨s, hs1, hs2⟩ := (hfa.and_eventually (Filter.eventually_of_mem hU
+            (fun s hs ↦ hs))).exists
+          exact ⟨s, hs2, hs1⟩
+      obtain ⟨s, ⟨hsIoo, hsT⟩, hsval⟩ := hpick
+      refine ⟨Function.update c k s, ?_, ?_, ?_⟩
+      · intro i hi
+        rcases Nat.lt_or_ge (i + 1) k with h | h
+        · rw [Function.update_of_ne (by omega), Function.update_of_ne (by omega)]
+          exact hdesc i h
+        · have hik : i + 1 = k := by omega
+          have hipos : 0 < k := by omega
+          rw [hik, Function.update_self, Function.update_of_ne (by omega)]
+          have hci : c i = u := by
+            rw [hu, dif_pos hipos]
+            congr 1
+            omega
+          rw [hci]
+          exact hsIoo.2
+      · intro i hi
+        rcases Nat.lt_or_ge i k with h | h
+        · rw [Function.update_of_ne (by omega)]
+          exact hmem i h
+        · have hik : i = k := by omega
+          rw [hik, Function.update_self]
+          exact ⟨hsT, hsIoo.1, hsIoo.2.trans_le hud⟩
+      · intro i hi
+        rcases Nat.lt_or_ge i k with h | h
+        · rw [Function.update_of_ne (by omega)]
+          exact hval i h
+        · have hik : i = k := by omega
+          subst hik
+          rw [Function.update_self]
+          exact hsval
+  obtain ⟨c, hdesc, hmem, hval⟩ := hsel (2 * m)
+  -- reverse the order
+  set ca : ℕ → ι := fun j ↦ c (2 * m - 1 - j) with hca
+  refine ⟨(Finset.range (2 * m)).image ca, ?_, ca, ?_, ?_, ?_, ?_⟩
+  · intro s hs
+    simp only [Finset.coe_image, Set.mem_image, Finset.coe_range, Set.mem_Iio] at hs
+    obtain ⟨j, hj, rfl⟩ := hs
+    exact hmem _ (by omega)
+  · intro j hj
+    have h1 : 2 * m - 1 - (j + 1) + 1 = 2 * m - 1 - j := by omega
+    have h2 := hdesc (2 * m - 1 - (j + 1)) (by omega)
+    rw [h1] at h2
+    exact h2
+  · intro j hj
+    exact Finset.mem_image_of_mem _ (Finset.mem_range.2 hj)
+  · intro i hi
+    have hodd : ¬ Even (2 * m - 1 - 2 * i) := by
+      have h1 : 2 * m - 1 - 2 * i = 2 * (m - i - 1) + 1 := by omega
+      rw [h1]
+      simp
+    have h2 := hval (2 * m - 1 - 2 * i) (by omega)
+    rw [if_neg hodd] at h2
+    exact h2
+  · intro i hi
+    have heven : Even (2 * m - 1 - (2 * i + 1)) := by
+      have h1 : 2 * m - 1 - (2 * i + 1) = 2 * (m - i - 1) := by omega
+      exact h1 ▸ even_two_mul _
+    have h2 := hval (2 * m - 1 - (2 * i + 1)) (by omega)
+    rw [if_pos heven] at h2
+    exact h2
+
+/-- Left-neighborhood version of `exists_finset_altSet_of_frequently_right`: the alternations
+occur in `T ∩ Iio x`. -/
+lemma exists_finset_altSet_of_frequently_left
+    (hfa : ∃ᶠ s in 𝓝[<] x ⊓ 𝓟 T, X s ω < a)
+    (hfb : ∃ᶠ s in 𝓝[<] x ⊓ 𝓟 T, b < X s ω) (m : ℕ) :
+    ∃ F : Finset ι, ↑F ⊆ T ∩ Set.Iio x ∧ ω ∈ altSet X F a b m := by
+  classical
+  -- ascending selection: even picks below `a`, odd picks above `b`
+  have hsel : ∀ k : ℕ, ∃ c : ℕ → ι, (∀ i, i + 1 < k → c i < c (i + 1))
+      ∧ (∀ i < k, c i ∈ T ∩ Set.Iio x)
+      ∧ (∀ i < k, if Even i then X (c i) ω < a else b < X (c i) ω) := by
+    intro k
+    induction k with
+    | zero => exact ⟨fun _ ↦ x, by omega, by omega, by omega⟩
+    | succ k ih =>
+      obtain ⟨c, hasc, hmem, hval⟩ := ih
+      have hU : (if 0 < k then Set.Ioo (c (k - 1)) x else Set.Iio x) ∩ T
+          ∈ 𝓝[<] x ⊓ 𝓟 T := by
+        refine Filter.inter_mem (Filter.mem_inf_of_left ?_)
+          (Filter.mem_inf_of_right (Filter.mem_principal_self T))
+        split_ifs with hk
+        · exact Ioo_mem_nhdsLT (hmem (k - 1) (by omega)).2
+        · exact self_mem_nhdsWithin
+      have hpick : ∃ s, s ∈ (if 0 < k then Set.Ioo (c (k - 1)) x else Set.Iio x) ∩ T
+          ∧ if Even k then X s ω < a else b < X s ω := by
+        by_cases hk : Even k
+        · simp only [if_pos hk]
+          obtain ⟨s, hs1, hs2⟩ := (hfa.and_eventually (Filter.eventually_of_mem hU
+            (fun s hs ↦ hs))).exists
+          exact ⟨s, hs2, hs1⟩
+        · simp only [if_neg hk]
+          obtain ⟨s, hs1, hs2⟩ := (hfb.and_eventually (Filter.eventually_of_mem hU
+            (fun s hs ↦ hs))).exists
+          exact ⟨s, hs2, hs1⟩
+      obtain ⟨s, ⟨hsIoo, hsT⟩, hsval⟩ := hpick
+      have hsx : s < x := by
+        by_cases hk : 0 < k
+        · rw [if_pos hk] at hsIoo
+          exact hsIoo.2
+        · rw [if_neg hk] at hsIoo
+          exact hsIoo
+      refine ⟨Function.update c k s, ?_, ?_, ?_⟩
+      · intro i hi
+        rcases Nat.lt_or_ge (i + 1) k with h | h
+        · rw [Function.update_of_ne (by omega), Function.update_of_ne (by omega)]
+          exact hasc i h
+        · have hik : i + 1 = k := by omega
+          have hipos : 0 < k := by omega
+          rw [hik, Function.update_self, Function.update_of_ne (by omega)]
+          rw [if_pos hipos] at hsIoo
+          have hci : c i = c (k - 1) := by congr 1; omega
+          rw [hci]
+          exact hsIoo.1
+      · intro i hi
+        rcases Nat.lt_or_ge i k with h | h
+        · rw [Function.update_of_ne (by omega)]
+          exact hmem i h
+        · have hik : i = k := by omega
+          rw [hik, Function.update_self]
+          exact ⟨hsT, hsx⟩
+      · intro i hi
+        rcases Nat.lt_or_ge i k with h | h
+        · rw [Function.update_of_ne (by omega)]
+          exact hval i h
+        · have hik : i = k := by omega
+          subst hik
+          rw [Function.update_self]
+          exact hsval
+  obtain ⟨c, hasc, hmem, hval⟩ := hsel (2 * m)
+  refine ⟨(Finset.range (2 * m)).image c, ?_, c, hasc, ?_, ?_, ?_⟩
+  · intro s hs
+    simp only [Finset.coe_image, Set.mem_image, Finset.coe_range, Set.mem_Iio] at hs
+    obtain ⟨j, hj, rfl⟩ := hs
+    exact hmem _ (by omega)
+  · intro j hj
+    exact Finset.mem_image_of_mem _ (Finset.mem_range.2 hj)
+  · intro i hi
+    have h2 := hval (2 * i) (by omega)
+    rwa [if_pos (even_two_mul i)] at h2
+  · intro i hi
+    have hodd : ¬ Even (2 * i + 1) := by simp
+    have h2 := hval (2 * i + 1) (by omega)
+    rwa [if_neg hodd] at h2
+
+end Selection
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
