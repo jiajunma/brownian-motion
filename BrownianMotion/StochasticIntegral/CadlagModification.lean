@@ -1375,6 +1375,90 @@ lemma tendsto_rightLim_comp_of_gt (hTd : Dense T) {T' : Set ι} (hTT' : T ⊆ T'
 
 end PathRegularization
 
+/-! ### Uncountable sets accumulate from the right -/
+
+section Accumulation
+
+set_option linter.unusedSectionVars false
+
+/-- In a separable, densely-ordered linear order with order topology, the set of points of `A`
+that are isolated from the right in `A` is countable. -/
+lemma countable_setOf_right_isolated [TopologicalSpace.SeparableSpace ι] (A : Set ι) :
+    {p ∈ A | ∃ b, p < b ∧ Set.Ioo p b ∩ A = ∅}.Countable := by
+  classical
+  obtain ⟨D₀, hD₀c, hD₀d⟩ := TopologicalSpace.exists_countable_dense ι
+  set I := {p ∈ A | ∃ b, p < b ∧ Set.Ioo p b ∩ A = ∅} with hI
+  have hbw : ∀ p ∈ I, ∃ bq : ι × ι, p < bq.1 ∧ Set.Ioo p bq.1 ∩ A = ∅
+      ∧ bq.2 ∈ D₀ ∧ bq.2 ∈ Set.Ioo p bq.1 := by
+    rintro p ⟨hpA, b, hpb, hbA⟩
+    obtain ⟨q, hqD, hq⟩ := hD₀d.exists_mem_open isOpen_Ioo (Set.nonempty_Ioo.2 hpb)
+    exact ⟨(b, q), hpb, hbA, hqD, hq⟩
+  choose! bq hb1 hb2 hb3 hb4 using hbw
+  have hkey : ∀ p ∈ I, ∀ p' ∈ I, p < p' → (bq p).2 < (bq p').2 := by
+    intro p hp p' hp' hlt
+    have hble : (bq p).1 ≤ p' := by
+      by_contra hcon
+      rw [not_le] at hcon
+      have hmem : p' ∈ Set.Ioo p (bq p).1 ∩ A := ⟨⟨hlt, hcon⟩, hp'.1⟩
+      rw [hb2 p hp] at hmem
+      exact hmem
+    exact ((hb4 p hp).2.trans_le hble).trans (hb4 p' hp').1
+  have hinj : Set.InjOn (fun p ↦ (bq p).2) I := by
+    intro p hp p' hp' hqq
+    rcases lt_trichotomy p p' with h | h | h
+    · exact absurd hqq (hkey p hp p' hp' h).ne
+    · exact h
+    · exact absurd hqq.symm (hkey p' hp' p hp h).ne
+  exact Set.MapsTo.countable_of_injOn (fun p hp ↦ hb3 p hp) hinj hD₀c
+
+/-- Any uncountable set in a separable, densely-ordered, first-countable linear order admits a
+strictly decreasing sequence of its elements converging to a point from the right. -/
+lemma exists_seq_strictAnti_tendsto_of_not_countable [TopologicalSpace.SeparableSpace ι]
+    {A : Set ι} (hA : ¬ A.Countable) :
+    ∃ p : ι, ∃ u : ℕ → ι, StrictAnti u ∧ (∀ k, u k ∈ A) ∧ (∀ k, p < u k)
+      ∧ Tendsto u atTop (𝓝 p) := by
+  classical
+  have hsub : ¬ (A ⊆ {p ∈ A | ∃ b, p < b ∧ Set.Ioo p b ∩ A = ∅}) := by
+    intro hcon
+    exact hA ((countable_setOf_right_isolated A).mono hcon)
+  rw [Set.not_subset] at hsub
+  obtain ⟨p, hpA, hpiso⟩ := hsub
+  have hacc : ∀ b, p < b → (Set.Ioo p b ∩ A).Nonempty := by
+    intro b hb
+    rw [Set.nonempty_iff_ne_empty]
+    intro hcon
+    exact hpiso ⟨hpA, b, hb, hcon⟩
+  obtain ⟨V, hV⟩ := (𝓝 p).exists_antitone_basis
+  have hstep : ∀ prev : ι, p < prev → ∀ j : ℕ, ∃ y, y ∈ A ∧ p < y ∧ y < prev ∧ y ∈ V j := by
+    intro prev hprev j
+    obtain ⟨w, hw, hsubV⟩ := exists_Ico_subset_of_mem_nhds (hV.mem j) ⟨prev, hprev⟩
+    obtain ⟨y, hy⟩ := hacc (min w prev) (lt_min hw hprev)
+    exact ⟨y, hy.2, hy.1.1, hy.1.2.trans_le (min_le_right _ _),
+      hsubV ⟨hy.1.1.le, hy.1.2.trans_le (min_le_left _ _)⟩⟩
+  obtain ⟨w0, hw0⟩ := exists_gt p
+  obtain ⟨y0, hy0⟩ := hacc w0 hw0
+  -- build the sequence by recursion through a subtype
+  let Q : Type _ := {y : ι // y ∈ A ∧ p < y}
+  let step : ℕ → Q → Q := fun k prev ↦
+    ⟨(hstep prev.1 prev.2.2 (k + 1)).choose, (hstep prev.1 prev.2.2 (k + 1)).choose_spec.1,
+      (hstep prev.1 prev.2.2 (k + 1)).choose_spec.2.1⟩
+  let u' : ℕ → Q := fun k ↦ Nat.rec ⟨y0, hy0.2, hy0.1.1⟩ step k
+  have hu'succ : ∀ k, u' (k + 1) = step k (u' k) := fun k ↦ rfl
+  have hlt : ∀ k, (u' (k + 1)).1 < (u' k).1 := by
+    intro k
+    rw [hu'succ k]
+    exact (hstep (u' k).1 (u' k).2.2 (k + 1)).choose_spec.2.2.1
+  have hmemV : ∀ k, (u' (k + 1)).1 ∈ V (k + 1) := by
+    intro k
+    rw [hu'succ k]
+    exact (hstep (u' k).1 (u' k).2.2 (k + 1)).choose_spec.2.2.2
+  refine ⟨p, fun k ↦ (u' k).1, strictAnti_nat_of_succ_lt hlt, fun k ↦ (u' k).2.1,
+    fun k ↦ (u' k).2.2, ?_⟩
+  rw [← Filter.tendsto_add_atTop_iff_nat 1]
+  exact hV.tendsto fun k ↦ hV.antitone (Nat.le_succ k) (hmemV k)
+
+end Accumulation
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
