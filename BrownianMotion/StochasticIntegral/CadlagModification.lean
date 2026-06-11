@@ -195,6 +195,137 @@ lemma le_upcrossingsBefore_of_alternating (hab : a < b) {m : ℕ} {c : ℕ → �
 
 end DiscreteUpcrossing
 
+/-! ### Finite skeletons and the elementary integral bridge
+
+Discrete data along a monotone sequence of times is converted into elementary predictable sets,
+whose elementary stochastic integrals compute weighted sums of increments of `X`. -/
+
+section Bridge
+
+set_option linter.unusedSectionVars false
+
+/-- The filtration on `ℕ` obtained by pulling back `𝓕` along a monotone sequence of times. -/
+def pullbackFiltration (𝓕 : Filtration ι mΩ) {idx : ℕ → ι} (hidx : Monotone idx) :
+    Filtration ℕ mΩ where
+  seq k := 𝓕 (idx k)
+  mono' _ _ h := 𝓕.mono (hidx h)
+  le' _ := 𝓕.le _
+
+@[simp] lemma pullbackFiltration_apply {idx : ℕ → ι} (hidx : Monotone idx) (k : ℕ) :
+    pullbackFiltration 𝓕 hidx k = 𝓕 (idx k) := rfl
+
+/-- The monotone enumeration of a finite set of times, extended by the constant `t` at indices
+beyond `F.card`. -/
+noncomputable def finIdx (F : Finset ι) (t : ι) : ℕ → ι := fun k ↦
+  if h : k < F.card then (F.orderIsoOfFin rfl ⟨k, h⟩ : ι) else t
+
+lemma finIdx_mem {F : Finset ι} {t : ι} {k : ℕ} (h : k < F.card) : finIdx F t k ∈ F := by
+  rw [finIdx, dif_pos h]
+  exact (F.orderIsoOfFin rfl ⟨k, h⟩).2
+
+lemma finIdx_eq_of_card_le {F : Finset ι} {t : ι} {k : ℕ} (h : F.card ≤ k) :
+    finIdx F t k = t := by
+  rw [finIdx, dif_neg (by omega)]
+
+lemma finIdx_le {F : Finset ι} {t : ι} (hF : ∀ s ∈ F, s ≤ t) (k : ℕ) : finIdx F t k ≤ t := by
+  rcases lt_or_ge k F.card with h | h
+  · exact hF _ (finIdx_mem h)
+  · exact (finIdx_eq_of_card_le h).le
+
+lemma finIdx_lt_of_lt {F : Finset ι} {t : ι} {k l : ℕ} (hkl : k < l) (hl : l < F.card) :
+    finIdx F t k < finIdx F t l := by
+  rw [finIdx, finIdx, dif_pos (hkl.trans hl), dif_pos hl]
+  exact_mod_cast (F.orderIsoOfFin rfl).strictMono (by exact_mod_cast hkl)
+
+lemma finIdx_monotone {F : Finset ι} {t : ι} (hF : ∀ s ∈ F, s ≤ t) : Monotone (finIdx F t) := by
+  intro k l hkl
+  rcases eq_or_lt_of_le hkl with rfl | hkl
+  · exact le_rfl
+  rcases lt_or_ge l F.card with h | h
+  · exact (finIdx_lt_of_lt hkl h).le
+  · rw [finIdx_eq_of_card_le h]
+    exact finIdx_le hF k
+
+lemma exists_finIdx_eq {F : Finset ι} {t : ι} {s : ι} (hs : s ∈ F) :
+    ∃ k, k < F.card ∧ finIdx F t k = s := by
+  obtain ⟨k, hk⟩ := (F.orderIsoOfFin rfl).surjective ⟨s, hs⟩
+  exact ⟨k, k.2, by rw [finIdx, dif_pos k.2, Fin.eta, hk]⟩
+
+/-- **Bridge lemma**: a finite collection of `{0,1}`-valued adapted weights along a monotone
+sequence of times below `t` is realized by an elementary predictable set whose elementary
+stochastic integral at time `t` is the weighted sum of increments of `X`. -/
+lemma exists_elementaryPredictableSet_integral_eq {t : ι} (n : ℕ) {idx : ℕ → ι}
+    (hidx : Monotone idx) (hidxt : ∀ k, idx k ≤ t) {W : ℕ → Ω → ℝ}
+    (hW01 : ∀ k, k < n → ∀ ω, W k ω = 0 ∨ W k ω = 1)
+    (hWmeas : ∀ k, k < n → Measurable[𝓕 (idx k)] (W k)) :
+    ∃ S : ElementaryPredictableSet 𝓕, ∀ ω,
+      (S.indicator (1 : ℝ) ● X) t ω
+        = ∑ k ∈ Finset.range n, W k ω * (X (idx (k + 1)) ω - X (idx k) ω) := by
+  classical
+  set K : Finset ℕ := {k ∈ Finset.range n | idx k < idx (k + 1)} with hK
+  have hKmem : ∀ {k}, k ∈ K → k < n ∧ idx k < idx (k + 1) := by
+    intro k hk
+    simpa [hK] using hk
+  have hinj : Set.InjOn (fun k ↦ (idx k, idx (k + 1))) K := by
+    intro k hk l hl hkl
+    simp only [Prod.mk.injEq] at hkl
+    by_contra hne
+    rcases lt_or_gt_of_ne hne with h | h
+    · exact absurd ((hidx (Nat.succ_le_of_lt h)).trans_eq hkl.1.symm) (hKmem hk).2.not_ge
+    · exact absurd ((hidx (Nat.succ_le_of_lt h)).trans_eq hkl.1) (hKmem hl).2.not_ge
+  refine ⟨⟨∅, K.image fun k ↦ (idx k, idx (k + 1)),
+    fun p ↦ if h : ∃ k ∈ K, (idx k, idx (k + 1)) = p then W h.choose ⁻¹' {1} else ∅,
+    ?_, @MeasurableSet.empty _ (𝓕 ⊥), ?_, ?_⟩, ?_⟩
+  · -- le_of_mem_I
+    intro p hp
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hp
+    exact (hKmem hk).2.le
+  · -- measurableSet_set
+    intro p hp
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hp
+    have hex : ∃ k' ∈ K, (idx k', idx (k' + 1)) = (idx k, idx (k + 1)) := ⟨k, hk, rfl⟩
+    simp only [dif_pos hex]
+    obtain ⟨hcK, hceq⟩ := hex.choose_spec
+    have h1 : idx hex.choose = idx k := (Prod.ext_iff.1 hceq).1
+    have h2 : MeasurableSet[𝓕 (idx hex.choose)] (W hex.choose ⁻¹' {1}) :=
+      hWmeas _ (hKmem hcK).1 (measurableSet_singleton 1)
+    rwa [h1] at h2
+  · -- pairwiseDisjoint
+    intro p hp q hq hpq
+    simp only [Finset.coe_image, Set.mem_image, Finset.mem_coe] at hp hq
+    obtain ⟨k, hk, rfl⟩ := hp
+    obtain ⟨l, hl, rfl⟩ := hq
+    have hkl : k ≠ l := fun h ↦ hpq (by rw [h])
+    have hIoc : Disjoint (Set.Ioc (idx k) (idx (k + 1))) (Set.Ioc (idx l) (idx (l + 1))) := by
+      rcases lt_or_gt_of_ne hkl with h | h
+      · exact Set.Ioc_disjoint_Ioc_of_le (hidx (Nat.succ_le_of_lt h))
+      · exact (Set.Ioc_disjoint_Ioc_of_le (hidx (Nat.succ_le_of_lt h))).symm
+    exact Set.disjoint_left.2 fun x hx hx' ↦
+      Set.disjoint_left.1 hIoc hx.1 hx'.1
+  · -- the integral computation
+    intro ω
+    rw [ElementaryPredictableSet.integral_indicator_apply,
+      Finset.sum_image fun k hk l hl h ↦ hinj hk hl h]
+    refine (Finset.sum_congr rfl fun k hk ↦ ?_).trans
+      (Finset.sum_subset (Finset.filter_subset _ _) fun k hk hkK ↦ ?_)
+    · -- per-term equality on K
+      have hex : ∃ k' ∈ K, (idx k', idx (k' + 1)) = (idx k, idx (k + 1)) := ⟨k, hk, rfl⟩
+      have hchoose : hex.choose = k := hinj hex.choose_spec.1 hk hex.choose_spec.2
+      have hst : ∀ j, stoppedProcess X (fun _ ↦ (t : WithTop ι)) (idx j) ω = X (idx j) ω :=
+        fun j ↦ stoppedProcess_eq_of_le (by exact_mod_cast hidxt j)
+      simp only [dif_pos hex, hchoose]
+      rcases hW01 k (hKmem hk).1 ω with h0 | h1
+      · rw [Set.indicator_of_notMem (by simp [h0]), h0, zero_mul]
+      · rw [Set.indicator_of_mem (by simp [h1]), h1, one_mul]
+        simp [ContinuousLinearMap.mul_apply', hst]
+    · -- terms outside K vanish
+      have hno : ¬ idx k < idx (k + 1) := fun h ↦ hkK (by simp [hK, Finset.mem_range.1 hk, h])
+      have heq : idx (k + 1) = idx k :=
+        le_antisymm (not_lt.1 hno) (hidx k.le_succ)
+      rw [heq, sub_self, mul_zero]
+
+end Bridge
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
