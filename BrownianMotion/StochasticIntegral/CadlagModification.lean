@@ -812,6 +812,132 @@ lemma measureReal_exists_abs_lt_le [IsFiniteMeasure μ]
 
 end Maximal
 
+/-! ### Almost-sure regularity along countable time sets -/
+
+section CountableEvents
+
+set_option linter.unusedSectionVars false
+
+variable {T : Set ι} {t : ι} {a b lam : ℝ} {m : ℕ}
+
+lemma countable_setOf_finset_coe_subset (hT : T.Countable) :
+    {F : Finset ι | ↑F ⊆ T}.Countable := by
+  have h1 : {F : Finset ι | ↑F ⊆ T}
+      ⊆ (fun F : Finset ι ↦ (F : Set ι)) ⁻¹' {u : Set ι | u.Finite ∧ u ⊆ T} :=
+    fun F hF ↦ ⟨F.finite_toSet, hF⟩
+  exact ((Set.countable_setOf_finite_subset hT).preimage Finset.coe_injective).mono h1
+
+/-- The union of the alternation events over all finite subsets of a countable set of times
+below `t` has measure at most `K / ((b - a) * m)`. -/
+lemma measure_biUnion_altSet_le [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hab : a < b) (hm : 0 < m) (hT : T.Countable) :
+    μ (⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}, altSet X F a b m)
+      ≤ ENNReal.ofReal ((C + ∫ ω, max (a - X t ω) 0 ∂μ) / (b - a) / m) := by
+  have hcnt : {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}.Countable :=
+    countable_setOf_finset_coe_subset (hT.mono Set.inter_subset_left)
+  have hdir : DirectedOn (Function.onFun (· ⊆ ·) fun F : Finset ι ↦ altSet X F a b m)
+      {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t} := by
+    intro F₁ h₁ F₂ h₂
+    refine ⟨F₁ ∪ F₂, ?_, altSet_mono Finset.subset_union_left,
+      altSet_mono Finset.subset_union_right⟩
+    rw [Set.mem_setOf_eq, Finset.coe_union]
+    exact Set.union_subset h₁ h₂
+  rw [measure_biUnion_eq_iSup hcnt hdir]
+  refine iSup₂_le fun F hF ↦ ?_
+  have hF' : ∀ s ∈ F, s ≤ t := fun s hs ↦ (hF hs).2
+  calc μ (altSet X F a b m) = ENNReal.ofReal (μ.real (altSet X F a b m)) :=
+        (ENNReal.ofReal_toReal (measure_ne_top μ _)).symm
+    _ ≤ _ := ENNReal.ofReal_le_ofReal
+        (measureReal_altSet_le (μ := μ) hX hXint hC hab hm hF')
+
+/-- Almost surely, there is no infinite family of alternations of `X` from below `a` to above `b`
+at times in a countable set `T` below `t`. -/
+lemma measure_iInter_biUnion_altSet [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hab : a < b) (hT : T.Countable) :
+    μ (⋂ m : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}, altSet X F a b (m + 1)) = 0 := by
+  refine le_antisymm ?_ zero_le'
+  have hbound : ∀ m : ℕ,
+      μ (⋂ m : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}, altSet X F a b (m + 1))
+        ≤ ENNReal.ofReal ((C + ∫ ω, max (a - X t ω) 0 ∂μ) / (b - a) / (m + 1)) := by
+    intro m
+    refine (measure_mono (Set.iInter_subset _ m)).trans ?_
+    have := measure_biUnion_altSet_le (μ := μ) hX hXint hC hab (Nat.succ_pos m) hT
+    convert this using 3
+    push_cast
+    ring
+  have hlim : Tendsto (fun m : ℕ ↦
+      ENNReal.ofReal ((C + ∫ ω, max (a - X t ω) 0 ∂μ) / (b - a) / (m + 1))) atTop (𝓝 0) := by
+    rw [← ENNReal.ofReal_zero]
+    refine (ENNReal.continuous_ofReal.tendsto 0).comp ?_
+    have h1 : Tendsto (fun n : ℕ ↦ ((C + ∫ ω, max (a - X t ω) 0 ∂μ) / (b - a)) / n)
+        atTop (𝓝 0) := tendsto_const_div_atTop_nhds_zero_nat _
+    have h2 := h1.comp (tendsto_add_atTop_nat 1)
+    refine h2.congr fun m ↦ ?_
+    simp [Function.comp, div_div]
+  exact ge_of_tendsto' hlim hbound
+
+/-- The union of the maximal events over all finite subsets of a countable set of times below
+`t` has measure at most `K / lam`. -/
+lemma measure_biUnion_exists_abs_le [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hlam : 0 < lam) (hT : T.Countable) :
+    μ (⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}, {ω | ∃ s ∈ F, lam < |X s ω|})
+      ≤ ENNReal.ofReal (2 * (C + ∫ ω, |X t ω - X ⊥ ω| ∂μ + ∫ ω, |X ⊥ ω| ∂μ
+          + ∫ ω, |X t ω| ∂μ) / lam) := by
+  have hcnt : {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t}.Countable :=
+    countable_setOf_finset_coe_subset (hT.mono Set.inter_subset_left)
+  have hdir : DirectedOn (Function.onFun (· ⊆ ·)
+      fun F : Finset ι ↦ {ω | ∃ s ∈ F, lam < |X s ω|})
+      {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t} := by
+    intro F₁ h₁ F₂ h₂
+    refine ⟨F₁ ∪ F₂, ?_, fun ω ⟨s, hs, hval⟩ ↦ ⟨s, Finset.mem_union_left _ hs, hval⟩,
+      fun ω ⟨s, hs, hval⟩ ↦ ⟨s, Finset.mem_union_right _ hs, hval⟩⟩
+    rw [Set.mem_setOf_eq, Finset.coe_union]
+    exact Set.union_subset h₁ h₂
+  rw [measure_biUnion_eq_iSup hcnt hdir]
+  refine iSup₂_le fun F hF ↦ ?_
+  have hF' : ∀ s ∈ F, s ≤ t := fun s hs ↦ (hF hs).2
+  calc μ {ω | ∃ s ∈ F, lam < |X s ω|}
+      = ENNReal.ofReal (μ.real {ω | ∃ s ∈ F, lam < |X s ω|}) :=
+        (ENNReal.ofReal_toReal (measure_ne_top μ _)).symm
+    _ ≤ _ := ENNReal.ofReal_le_ofReal
+        (measureReal_exists_abs_lt_le (μ := μ) hX hXint hC hlam hF')
+
+/-- Almost surely, `X` is bounded on any countable set of times below `t`. -/
+lemma measure_iInter_biUnion_exists_abs [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ) {C : ℝ}
+    (hC : ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    (hT : T.Countable) :
+    μ (⋂ M : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t},
+      {ω | ∃ s ∈ F, (M + 1 : ℝ) < |X s ω|}) = 0 := by
+  refine le_antisymm ?_ zero_le'
+  have hbound : ∀ M : ℕ,
+      μ (⋂ M : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic t},
+          {ω | ∃ s ∈ F, (M + 1 : ℝ) < |X s ω|})
+        ≤ ENNReal.ofReal (2 * (C + ∫ ω, |X t ω - X ⊥ ω| ∂μ + ∫ ω, |X ⊥ ω| ∂μ
+            + ∫ ω, |X t ω| ∂μ) / (M + 1)) := by
+    intro M
+    refine (measure_mono (Set.iInter_subset _ M)).trans ?_
+    exact measure_biUnion_exists_abs_le (μ := μ) hX hXint hC (by positivity) hT
+  have hlim : Tendsto (fun M : ℕ ↦
+      ENNReal.ofReal (2 * (C + ∫ ω, |X t ω - X ⊥ ω| ∂μ + ∫ ω, |X ⊥ ω| ∂μ
+        + ∫ ω, |X t ω| ∂μ) / (M + 1))) atTop (𝓝 0) := by
+    rw [← ENNReal.ofReal_zero]
+    refine (ENNReal.continuous_ofReal.tendsto 0).comp ?_
+    have h1 : Tendsto (fun n : ℕ ↦ (2 * (C + ∫ ω, |X t ω - X ⊥ ω| ∂μ + ∫ ω, |X ⊥ ω| ∂μ
+        + ∫ ω, |X t ω| ∂μ)) / n) atTop (𝓝 0) := tendsto_const_div_atTop_nhds_zero_nat _
+    have h2 := h1.comp (tendsto_add_atTop_nat 1)
+    refine h2.congr fun M ↦ ?_
+    simp [Function.comp]
+  exact ge_of_tendsto' hlim hbound
+
+end CountableEvents
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
