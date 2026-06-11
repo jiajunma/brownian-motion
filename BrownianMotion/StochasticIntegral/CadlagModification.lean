@@ -28,9 +28,6 @@ variable {ι Ω : Type*} [TopologicalSpace ι] [LinearOrder ι] [OrderBot ι] [O
   {mΩ : MeasurableSpace Ω} {𝓕 : Filtration ι mΩ} {μ : Measure Ω}
   {X : ι → Ω → ℝ} {τ σ : Ω → WithTop ι} {i : ι}
 
--- Is this the correct time index?
-variable [Approximable 𝓕 μ]
-
 local notation:25 V " ● " X => SimpleProcess.integral (ContinuousLinearMap.mul ℝ ℝ) V X
 
 /-! ### Discrete upcrossing helpers
