@@ -1135,6 +1135,113 @@ lemma exists_finset_altSet_of_frequently_left
 
 end Selection
 
+/-! ### Almost-sure existence of one-sided limits along a countable time set -/
+
+section AETendsto
+
+set_option linter.unusedSectionVars false
+
+/-- **Almost surely, `X` admits one-sided limits along a countable cofinal time set `T` at every
+point of `ι`.** This is the probabilistic core of the regularization theorem. -/
+lemma ae_tendsto_along_countable [IsFiniteMeasure μ]
+    (hX : StronglyAdapted 𝓕 X) (hXint : ∀ s, Integrable (X s) μ)
+    (hXbdd : ∀ t : ι, ∃ C, ∀ S : ElementaryPredictableSet 𝓕, μ[(S.indicator (1 : ℝ) ● X) t] ≤ C)
+    {T : Set ι} (hT : T.Countable) (hTcof : ∀ x : ι, ∃ d ∈ T, x < d) :
+    ∀ᵐ ω ∂μ, ∀ x : ι, (∃ l, Tendsto (fun s ↦ X s ω) (𝓝[>] x ⊓ 𝓟 T) (𝓝 l))
+      ∧ (∃ l, Tendsto (fun s ↦ X s ω) (𝓝[<] x ⊓ 𝓟 T) (𝓝 l)) := by
+  classical
+  choose C hC using hXbdd
+  set badAlt : ℚ → ℚ → ι → Set Ω := fun q r d ↦
+    ⋂ m : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic d}, altSet X F q r (m + 1) with hbadAlt_def
+  set badMax : ι → Set Ω := fun d ↦
+    ⋂ M : ℕ, ⋃ F ∈ {F : Finset ι | ↑F ⊆ T ∩ Set.Iic d},
+      {ω | ∃ s ∈ F, (M + 1 : ℝ) < |X s ω|} with hbadMax_def
+  -- the bad sets are null
+  have h1 : ∀ᵐ ω ∂μ, ∀ d ∈ T, ∀ q r : ℚ, (q : ℝ) < (r : ℝ) → ω ∉ badAlt q r d := by
+    rw [ae_ball_iff hT]
+    intro d _
+    rw [ae_all_iff]
+    intro q
+    rw [ae_all_iff]
+    intro r
+    rw [eventually_imp_distrib_left]
+    intro hqr
+    exact compl_mem_ae_iff.2 (measure_iInter_biUnion_altSet hX hXint (hC d) hqr hT)
+  have h2 : ∀ᵐ ω ∂μ, ∀ d ∈ T, ω ∉ badMax d := by
+    rw [ae_ball_iff hT]
+    intro d _
+    exact compl_mem_ae_iff.2 (measure_iInter_biUnion_exists_abs hX hXint (hC d) hT)
+  filter_upwards [h1, h2] with ω hω1 hω2
+  intro x
+  obtain ⟨d, hdT, hxd⟩ := hTcof x
+  -- pathwise boundedness on `T ∩ Iic d`
+  obtain ⟨M, hM⟩ : ∃ M : ℕ, ∀ s' ∈ T ∩ Set.Iic d, |X s' ω| ≤ M + 1 := by
+    have hnot := hω2 d hdT
+    rw [hbadMax_def] at hnot
+    simp only [Set.mem_iInter, not_forall] at hnot
+    obtain ⟨M, hM⟩ := hnot
+    refine ⟨M, fun s' hs' ↦ ?_⟩
+    by_contra hcon
+    push Not at hcon
+    refine hM (Set.mem_biUnion (x := ({s'} : Finset ι)) ?_ ?_)
+    · rw [Set.mem_setOf_eq, Finset.coe_singleton, Set.singleton_subset_iff]
+      exact hs'
+    · exact ⟨s', Finset.mem_singleton_self s', hcon⟩
+  have hdense : Dense (Set.range ((↑) : ℚ → ℝ)) := Rat.denseRange_cast
+  constructor
+  · -- right limits
+    have hU : Set.Ioc x d ∩ T ∈ 𝓝[>] x ⊓ 𝓟 T :=
+      Filter.inter_mem (Filter.mem_inf_of_left (Ioc_mem_nhdsGT hxd))
+        (Filter.mem_inf_of_right (Filter.mem_principal_self T))
+    have hbddAbove : Filter.IsBoundedUnder (· ≤ ·) (𝓝[>] x ⊓ 𝓟 T) (fun s' ↦ X s' ω) := by
+      refine ⟨(M : ℝ) + 1, ?_⟩
+      rw [Filter.eventually_map]
+      filter_upwards [hU] with s' hs'
+      exact le_of_abs_le (hM s' ⟨hs'.2, hs'.1.2⟩)
+    have hbddBelow : Filter.IsBoundedUnder (· ≥ ·) (𝓝[>] x ⊓ 𝓟 T) (fun s' ↦ X s' ω) := by
+      refine ⟨-((M : ℝ) + 1), ?_⟩
+      rw [Filter.eventually_map]
+      filter_upwards [hU] with s' hs'
+      exact neg_le_of_abs_le (hM s' ⟨hs'.2, hs'.1.2⟩)
+    refine tendsto_of_no_upcrossings hdense ?_ hbddAbove hbddBelow
+    rintro p ⟨q, rfl⟩ p' ⟨r, rfl⟩ hqr ⟨hfa, hfb⟩
+    refine hω1 d hdT q r hqr ?_
+    rw [hbadAlt_def]
+    rw [Set.mem_iInter]
+    intro m
+    obtain ⟨F, hFsub, hFalt⟩ := exists_finset_altSet_of_frequently_right hxd hfa hfb (m + 1)
+    refine Set.mem_biUnion ?_ hFalt
+    rw [Set.mem_setOf_eq]
+    exact hFsub.trans (Set.inter_subset_inter_right T
+      (Set.Ioo_subset_Ioc_self.trans Set.Ioc_subset_Iic_self))
+  · -- left limits
+    have hU : Set.Iio x ∩ T ∈ 𝓝[<] x ⊓ 𝓟 T :=
+      Filter.inter_mem (Filter.mem_inf_of_left self_mem_nhdsWithin)
+        (Filter.mem_inf_of_right (Filter.mem_principal_self T))
+    have hbddAbove : Filter.IsBoundedUnder (· ≤ ·) (𝓝[<] x ⊓ 𝓟 T) (fun s' ↦ X s' ω) := by
+      refine ⟨(M : ℝ) + 1, ?_⟩
+      rw [Filter.eventually_map]
+      filter_upwards [hU] with s' hs'
+      exact le_of_abs_le (hM s' ⟨hs'.2, (hs'.1.trans hxd).le⟩)
+    have hbddBelow : Filter.IsBoundedUnder (· ≥ ·) (𝓝[<] x ⊓ 𝓟 T) (fun s' ↦ X s' ω) := by
+      refine ⟨-((M : ℝ) + 1), ?_⟩
+      rw [Filter.eventually_map]
+      filter_upwards [hU] with s' hs'
+      exact neg_le_of_abs_le (hM s' ⟨hs'.2, (hs'.1.trans hxd).le⟩)
+    refine tendsto_of_no_upcrossings hdense ?_ hbddAbove hbddBelow
+    rintro p ⟨q, rfl⟩ p' ⟨r, rfl⟩ hqr ⟨hfa, hfb⟩
+    refine hω1 d hdT q r hqr ?_
+    rw [hbadAlt_def]
+    rw [Set.mem_iInter]
+    intro m
+    obtain ⟨F, hFsub, hFalt⟩ := exists_finset_altSet_of_frequently_left hfa hfb (m + 1)
+    refine Set.mem_biUnion ?_ hFalt
+    rw [Set.mem_setOf_eq]
+    refine hFsub.trans (Set.inter_subset_inter_right T ?_)
+    exact fun s' hs' ↦ le_of_lt (lt_trans hs' hxd)
+
+end AETendsto
+
 /-- If `X` is an adapted integrable stochastic process such that the sets
 `{𝔼[(𝟙_A ● X) t] | A elementary predicatable}` is bounded for any t, then it has a modification `Y`
 which has left and right limits everywhere and is right continuous on a co-countable set
